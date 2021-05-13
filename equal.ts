@@ -1,4 +1,4 @@
-import { and, length, N, xor, entries, has, ifElse, F, AnyFn } from "./deps.ts";
+import { and, length, N, xor, entries, has, F, AnyFn } from "./deps.ts";
 import {
   is,
   isBothPrimitive,
@@ -76,17 +76,10 @@ const verdictTable: Verdict[] = [
  *
  * Equality is defined as the case where property members and their values are equivalent.
  *
- * Only all primitive values, literal object(`{}`, `{ hoge: 'huga'}`) and Array(regardless of depth) object work correctly.
- *
  * Operation not guaranteed
  *
  * Here are some examples.
- * - `Date`
- * - `Regex`
- * - `Error`
  * - `Set`
- * - `Function`
- * - `Class`
  *
  * @example
  * ```ts
@@ -96,8 +89,7 @@ const verdictTable: Verdict[] = [
  * equals({ a: { b: [1, 2, 3]}}, { a: { b: [1, 2, 3]}}) // true
  * ```
  *
- * @alpha
- *
+ * @beta
  */
 const equal = <T, U extends T>(a: T, b: U) => {
   if (is(a, b)) return true;
