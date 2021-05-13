@@ -13,12 +13,12 @@ const isJsonObject = <T extends unknown>(val: T): val is T =>
   getConstructorName(val) === JSON_OBJECT;
 
 const entriesSymbol = (
-  val: Record<PropertyKey, unknown>
+  val: Record<PropertyKey, unknown>,
 ): [string, unknown][] => {
   const symbols = getOwnPropertySymbols(val) as Extract<
     PropertyKey,
     "symbol"
   >[];
-  return symbols.map(symbol => [symbol, val[symbol]]);
+  return symbols.map((symbol) => [symbol, val[symbol]]);
 };
-export { isJsonObject, entriesSymbol };
+export { entriesSymbol, isJsonObject };

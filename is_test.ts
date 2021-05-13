@@ -66,7 +66,7 @@ Deno.test("is", () => {
     [Boolean(false), true, false],
     // symbol
     [symbol, symbol, true],
-    [Symbol("hello"), Symbol("hello"), false]
+    [Symbol("hello"), Symbol("hello"), false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
@@ -74,7 +74,7 @@ Deno.test("is", () => {
       expected,
       `is(${isSymbol(a) ? "symbol" : a}, ${
         isSymbol(b) ? "symbol" : b
-      }) -> ${expected}`
+      }) -> ${expected}`,
     );
   });
 });

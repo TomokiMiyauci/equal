@@ -1,19 +1,19 @@
-import { and, length, N, xor, entries, has, F, AnyFn } from "./deps.ts";
+import { and, AnyFn, entries, F, has, length, N, xor } from "./deps.ts";
 import {
   is,
-  isBothPrimitive,
+  isBothArray,
   isBothDate,
   isBothError,
-  isBothRegExp,
-  isBothArray,
   isBothFunction,
-  isBothJsonObject
+  isBothJsonObject,
+  isBothPrimitive,
+  isBothRegExp,
 } from "./is.ts";
 import { entriesSymbol } from "./utils.ts";
 
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
-  AnyFn<any, boolean>
+  AnyFn<any, boolean>,
 ];
 
 const equalRegExp = <T extends RegExp, U extends T>(a: T, b: U): boolean =>
@@ -30,7 +30,7 @@ const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
 
 const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   a: T,
-  b: U
+  b: U,
 ): boolean => {
   const entriesA = [...entries(a), ...entriesSymbol(a)];
   const entriesB = [...entries(b), ...entriesSymbol(b)];
@@ -61,7 +61,7 @@ const verdictTable: Verdict[] = [
   [isBothDate, equalDate],
   [isBothFunction, equalFunction],
   [isBothRegExp, equalRegExp],
-  [isBothError, equalError]
+  [isBothError, equalError],
 ];
 
 /**
@@ -104,10 +104,10 @@ const equal = <T, U extends T>(a: T, b: U) => {
 
 export {
   equal,
-  equalDate,
-  equalRegExp,
-  equalError,
   equalArray,
+  equalDate,
+  equalError,
   equalFunction,
-  equalJsonObject
+  equalJsonObject,
+  equalRegExp,
 };

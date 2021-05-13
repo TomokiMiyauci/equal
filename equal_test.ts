@@ -2,12 +2,12 @@
 import { assertEquals, isSymbol } from "./dev_deps.ts";
 import {
   equal,
+  equalArray,
   equalDate,
-  equalRegExp,
   equalError,
   equalFunction,
   equalJsonObject,
-  equalArray
+  equalRegExp,
 } from "./equal.ts";
 
 Deno.test("equalJsonObject", () => {
@@ -17,7 +17,7 @@ Deno.test("equalJsonObject", () => {
   const table: [
     { [k in PropertyKey]: unknown },
     { [k in PropertyKey]: unknown },
-    boolean
+    boolean,
   ][] = [
     [{}, {}, true],
     [{ "": "" }, { "": "" }, true],
@@ -33,7 +33,7 @@ Deno.test("equalJsonObject", () => {
     [
       { a: { b: { c: { d: () => {}, e: 0, f: [] } } } },
       { a: { b: { c: { d: () => {}, e: 0, f: [] } } } },
-      true
+      true,
     ],
     [{ [symbol]: true }, { [symbol]: true }, true],
     [{ [symbol]: true }, { [symbol]: false }, false],
@@ -44,20 +44,20 @@ Deno.test("equalJsonObject", () => {
     [
       { [symbol]: true, 1: "hello", [symbol2]: "world" },
       { [symbol]: true, 1: "hello", [symbol2]: "world" },
-      true
+      true,
     ],
     [
       { [symbol]: true, 1: "hello", [symbol2]: "world" },
       { [symbol]: true, 1: "hello", [symbol]: "world" },
-      false
-    ]
+      false,
+    ],
   ];
 
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalJsonObject(a, b),
       expected,
-      `equalJsonObject(${a}, ${b}) -> ${expected}`
+      `equalJsonObject(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -88,17 +88,17 @@ Deno.test("equalArray", () => {
     [
       [1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]]],
       [1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]]],
-      true
+      true,
     ],
     [
       [1, [2, [3, [4, [5, [6, [7, [8, [9]]]]]]]]],
       [1, [2, [3, [4, [5, [6, [6, [8, [9]]]]]]]]],
-      false
+      false,
     ],
     [
       [1, [2, [3, [4, [5, [6, [7, [8, [10, 9, 8]]]]]]]]],
       [1, [2, [3, [4, [5, [6, [6, [8, [10, 9, 7]]]]]]]]],
-      false
+      false,
     ],
     [[1], [0], false],
     // string pattern
@@ -108,7 +108,7 @@ Deno.test("equalArray", () => {
     [
       ["a", ["b", ["c", ["d", ["e", ["f", "g"]]]]]],
       ["a", ["b", ["c", ["d", ["e", ["f", "g"]]]]]],
-      true
+      true,
     ],
     // undefined pattern
     [[undefined], [undefined], true],
@@ -116,12 +116,12 @@ Deno.test("equalArray", () => {
     [
       Array(6).fill(undefined),
       [undefined, undefined, undefined, undefined, undefined, undefined],
-      true
+      true,
     ],
     [
       Array(6).fill(undefined),
       [undefined, undefined, undefined, undefined, undefined],
-      false
+      false,
     ],
     // null pattern
     [[null], [null], true],
@@ -143,43 +143,43 @@ Deno.test("equalArray", () => {
       [
         {},
         {
-          a: 1
+          a: 1,
         },
         {
-          b: ""
+          b: "",
         },
         {
           c: [
             {
-              d: undefined
+              d: undefined,
             },
             {
-              e: []
-            }
-          ]
-        }
+              e: [],
+            },
+          ],
+        },
       ],
       [
         {},
         {
-          a: 1
+          a: 1,
         },
         {
-          b: ""
+          b: "",
         },
         {
           c: [
             {
-              d: undefined
+              d: undefined,
             },
             {
-              e: []
-            }
-          ]
-        }
+              e: [],
+            },
+          ],
+        },
       ],
-      true
-    ]
+      true,
+    ],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(equalArray(a, b), expected, `equalArray(?, ?) -> ${expected}`);
@@ -192,14 +192,14 @@ Deno.test("equalRegExp", () => {
     [/s/, /t/, false],
     [/a/gi, /a/gi, true],
     [/a/gim, /a/gim, true],
-    [/a/gi, /a/i, false]
+    [/a/gi, /a/i, false],
     // date
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalRegExp(a, b),
       expected,
-      `equalRegExp(${a}, ${b}) -> ${expected}`
+      `equalRegExp(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -209,13 +209,13 @@ Deno.test("equalError", () => {
     [Error("hoge"), Error("hoge"), true],
     [Error("hoge"), Error("hogehoge"), false],
     [Error("xxx"), new TypeError("xxx"), false],
-    [TypeError("xxx"), new TypeError("xxx"), true]
+    [TypeError("xxx"), new TypeError("xxx"), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalError(a, b),
       expected,
-      `equalError(${a}, ${b}) -> ${expected}`
+      `equalError(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -225,13 +225,13 @@ Deno.test("equalDate", () => {
     [new Date(0), new Date(0), true],
     [new Date(0), new Date("1999/1/1"), false],
     [new Date(1), new Date(0), false],
-    [new Date(0), new Date(1), false]
+    [new Date(0), new Date(1), false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalDate(a, b),
       expected,
-      `equalDate(${a}, ${b}) -> ${expected}`
+      `equalDate(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -252,13 +252,13 @@ Deno.test("equalFunction", () => {
     [a, c, false],
     [c, d, false],
     [Foo, Foo, true],
-    [Foo, Bar, false]
+    [Foo, Bar, false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalFunction(a, b),
       expected,
-      `equalFunction(${a}, ${b}) -> ${expected}`
+      `equalFunction(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -354,7 +354,7 @@ Deno.test("equal", () => {
     [{}, new Date(0), false],
 
     [new Set(), new Set(), false],
-    [new Set(), new Set([]), false]
+    [new Set(), new Set([]), false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
@@ -362,7 +362,7 @@ Deno.test("equal", () => {
       expected,
       `equal(${isSymbol(a) ? "symbol" : a}, ${
         isSymbol(b) ? "symbol" : b
-      }) -> ${expected}`
+      }) -> ${expected}`,
     );
   });
 });
