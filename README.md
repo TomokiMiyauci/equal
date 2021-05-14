@@ -132,6 +132,8 @@ equal(/hello/g, /hello/g); // true
 
 #### UMD
 
+> The global object is `E`.
+
 ```html
 <script src="https://unpkg.com/lauqe"></script>
 
