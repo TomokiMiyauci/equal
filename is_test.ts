@@ -1,4 +1,4 @@
-// Copyright 2021-present the Fonction authors. All rights reserved. MIT license.
+// Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { assertEquals, isSymbol } from "./dev_deps.ts";
 import { is } from "./is.ts";
 

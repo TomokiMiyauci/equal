@@ -1,3 +1,4 @@
+// Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { and, isArray, isFunction, isObject, isPrimitive, N } from "./deps.ts";
 import { is as _is } from "./constants.ts";
 import { isJsonObject } from "./utils.ts";

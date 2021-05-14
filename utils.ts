@@ -1,3 +1,4 @@
+// Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { isFunction } from "./deps.ts";
 import { is as _is, JSON_OBJECT } from "./constants.ts";
 import { getOwnPropertySymbols } from "./constants.ts";

@@ -1,3 +1,4 @@
+// Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { and, AnyFn, entries, F, has, length, N, xor } from "./deps.ts";
 import {
   is,
