@@ -7,6 +7,7 @@ import {
   isBothError,
   isBothFunction,
   isBothJsonObject,
+  isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
@@ -25,16 +26,6 @@ type Verdict = [
  * @param b - Input any value
  * @returns Return `true` if the reference memory is the same or the property members and their values are the same
  *
- * @remarks
- * Definition of equivalent
- *
- * Equality is defined as the case where property members and their values are equivalent.
- *
- * Operation not guaranteed
- *
- * Here are some examples.
- * - `Set`
- *
  * @example
  * ```ts
  * equals(-0, 0) // true
@@ -43,12 +34,13 @@ type Verdict = [
  * equals({ a: { b: [1, 2, 3]}}, { a: { b: [1, 2, 3]}}) // true
  * ```
  *
- * @beta
+ * @public
  */
 const equal = <T, U extends T>(a: T, b: U): boolean => {
   if (is(a, b)) return true;
 
   const verdictTable: Verdict[] = [
+    [isBothNumber, (a: unknown, b: unknown) => a === b],
     [isBothPrimitive, F],
     [isBothJsonObject, equalJsonObject],
     [isBothArray, equalArray],
