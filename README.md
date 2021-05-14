@@ -29,7 +29,7 @@ Deep comparison between two values to determine if they are equivalent
 
 ## Table of Contents
 
-- [Features](#sparkles-feature)
+- [Features](#sparkles-features)
 - [API](#memo-api)
 - [Supports](#green_heart-supports)
 - [Usage](#dizzy-usage)
