@@ -1,3 +1,8 @@
+# [v1.0.1-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.0.0...v1.0.1-beta.1) (2021-05-14)
+
+## 🐛 Bug Fixes
+- [`a1e346e`](https://github.com/TomokiMiyauci/equal/commit/a1e346e)   Equal to same value zero
+
 # v1.0.0 (2021-05-14)
 
 ## ✨ New Features

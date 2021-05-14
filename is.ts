@@ -1,9 +1,23 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { and, isArray, isFunction, isObject, isPrimitive, N } from "./deps.ts";
+import {
+  and,
+  isArray,
+  isFunction,
+  isNumber,
+  isObject,
+  isPrimitive,
+  N,
+} from "./deps.ts";
 import { is as _is } from "./constants.ts";
 import { isJsonObject } from "./utils.ts";
 
 const is = <T, U extends T>(a: T, b: U): boolean => _is(a, b);
+
+const isBothNumber = <T, U extends T>(a: T, b: U) =>
+  [
+    isNumber(a),
+    isNumber(b),
+  ] as const;
 
 const isBothPrimitive = <T, U extends T>(a: T, b: U) =>
   [isPrimitive(a), isPrimitive(b)] as const;
@@ -36,6 +50,7 @@ export {
   isBothError,
   isBothFunction,
   isBothJsonObject,
+  isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
