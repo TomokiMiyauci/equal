@@ -7,6 +7,8 @@ import { main, module } from "./package.json";
 
 const baseDir = resolve(__dirname);
 const inputFilePath = resolve(baseDir, "mod.ts");
+const banner =
+  "/*! Copyright (c) 2021-present TomokiMiyauci. All rights reserved. MIT license. */";
 
 const replaceOption = {
   ".ts": "",
@@ -20,6 +22,7 @@ const config = [
     plugins: [
       replace(replaceOption),
       ts({
+        transpiler: "babel",
         tsconfig: (resolvedConfig) => ({
           ...resolvedConfig,
           declaration: false,
@@ -35,13 +38,16 @@ const config = [
       format: "umd",
       sourcemap: true,
       name: "E",
+      banner,
     },
   },
   {
     input: inputFilePath,
     plugins: [
       replace(replaceOption),
-      ts(),
+      ts({
+        transpiler: "babel",
+      }),
       nodeResolve(),
       terser(),
     ],
@@ -50,6 +56,7 @@ const config = [
       file: module,
       format: "es",
       sourcemap: true,
+      banner,
     },
   },
 ];
