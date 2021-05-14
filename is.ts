@@ -1,4 +1,4 @@
-import { and, isArray, isFunction, isObject, isPrimitive } from "./deps.ts";
+import { and, isArray, isFunction, isObject, isPrimitive, N } from "./deps.ts";
 import { is as _is } from "./constants.ts";
 import { isJsonObject } from "./utils.ts";
 
@@ -12,8 +12,8 @@ const isBothArray = <T, U extends T>(a: T, b: U) =>
 
 const isBothObjectExcludeJSON = <T, U extends T>(a: T, b: U) =>
   [
-    and(isObject(a), isJsonObject(a)),
-    and(isObject(b), isJsonObject(b)),
+    and(isObject(a), N(isJsonObject(a))),
+    and(isObject(b), N(isJsonObject(b))),
   ] as const;
 
 const isBothFunction = <T, U extends T>(a: T, b: U) =>

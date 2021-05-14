@@ -6,62 +6,15 @@ import {
   isBothError,
   isBothFunction,
   isBothJsonObject,
+  isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
 } from "./is.ts";
-import { entriesSymbol } from "./utils.ts";
+import { entriesSymbol, instanceOf } from "./utils.ts";
 
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
   AnyFn<any, boolean>,
-];
-
-const equalRegExp = <T extends RegExp, U extends T>(a: T, b: U): boolean =>
-  a.toString() === b.toString();
-
-const equalDate = <T extends Date, U extends T>(a: T, b: U): boolean =>
-  a.getTime() === b.getTime();
-
-const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
-  and(a.message === b.message, a.toString() === b.toString());
-
-const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
-  a.toString() === b.toString();
-
-const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
-  a: T,
-  b: U,
-): boolean => {
-  const entriesA = [...entries(a), ...entriesSymbol(a)];
-  const entriesB = [...entries(b), ...entriesSymbol(b)];
-  const lenA = length(entriesA);
-  const lenB = length(entriesB);
-
-  if (lenA !== lenB) return false;
-
-  return entriesA.every(([key, value]) =>
-    and(has(key, b), equal(value, b[key]))
-  );
-};
-
-const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
-  const lenA = length(a);
-  const lenB = length(b);
-
-  if (and(N(lenA), N(lenB))) return true;
-  if (lenA !== lenB) return false;
-
-  return a.every((v, index) => equal(v, b[index]));
-};
-
-const verdictTable: Verdict[] = [
-  [isBothPrimitive, F],
-  [isBothJsonObject, equalJsonObject],
-  [isBothArray, equalArray],
-  [isBothDate, equalDate],
-  [isBothFunction, equalFunction],
-  [isBothRegExp, equalRegExp],
-  [isBothError, equalError],
 ];
 
 /**
@@ -91,8 +44,19 @@ const verdictTable: Verdict[] = [
  *
  * @beta
  */
-const equal = <T, U extends T>(a: T, b: U) => {
+const equal = <T, U extends T>(a: T, b: U): boolean => {
   if (is(a, b)) return true;
+
+  const verdictTable: Verdict[] = [
+    [isBothPrimitive, F],
+    [isBothJsonObject, equalJsonObject],
+    [isBothArray, equalArray],
+    [isBothDate, equalDate],
+    [isBothFunction, equalFunction],
+    [isBothRegExp, equalRegExp],
+    [isBothError, equalError],
+    [isBothObjectExcludeJSON, equalObjectExcludeJson],
+  ];
 
   for (const [filter, fn] of verdictTable) {
     const [f1, f2] = filter(a, b);
@@ -102,6 +66,61 @@ const equal = <T, U extends T>(a: T, b: U) => {
   return false;
 };
 
+const equalRegExp = <T extends RegExp, U extends T>(a: T, b: U): boolean =>
+  a.toString() === b.toString();
+
+const equalDate = <T extends Date, U extends T>(a: T, b: U): boolean =>
+  a.getTime() === b.getTime();
+
+const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
+  and(a.message === b.message, a.toString() === b.toString());
+
+const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
+  a.toString() === b.toString();
+
+const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
+  a: T,
+  b: U,
+): boolean => {
+  const entriesA = [...entries(a), ...entriesSymbol(a)];
+  const entriesB = [...entries(b), ...entriesSymbol(b)];
+  const lenA = length(entriesA);
+  const lenB = length(entriesB);
+
+  if (lenA !== lenB) return false;
+
+  return entriesA.every(([key, value]) =>
+    and(has(key, b), equal(value, b[key]))
+  );
+};
+
+const equalObjectExcludeJson = <
+  T extends Object,
+  U extends T,
+>(
+  a: T,
+  b: U,
+): boolean => {
+  if (
+    [Number, String, Boolean].some((obj) =>
+      and(instanceOf(obj, a), instanceOf(obj, b))
+    )
+  ) {
+    return equal(a.valueOf(), b.valueOf());
+  }
+  return false;
+};
+
+const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
+  const lenA = length(a);
+  const lenB = length(b);
+
+  if (and(N(lenA), N(lenB))) return true;
+  if (lenA !== lenB) return false;
+
+  return a.every((v, index) => equal(v, b[index]));
+};
+
 export {
   equal,
   equalArray,
@@ -109,5 +128,6 @@ export {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalObjectExcludeJson,
   equalRegExp,
 };

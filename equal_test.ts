@@ -7,6 +7,7 @@ import {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalObjectExcludeJson,
   equalRegExp,
 } from "./equal.ts";
 
@@ -58,6 +59,38 @@ Deno.test("equalJsonObject", () => {
       equalJsonObject(a, b),
       expected,
       `equalJsonObject(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalObjectExcludeJson", () => {
+  const table: [
+    Object,
+    Object,
+    boolean,
+  ][] = [
+    // Number
+    [new Number(1), new Number(1), true],
+    [new Number(1), new Number(0), false],
+    [new Number(0), new Number(1), false],
+    [new Number(0), new Number(0), true],
+    // String
+    [new String(""), new String(""), true],
+    [new String(""), new String("x"), false],
+    [new String("x"), new String(""), false],
+    [new String("xxx"), new String("xxx"), true],
+    // Boolean
+    [new Boolean(true), new Boolean(true), true],
+    [new Boolean(false), new Boolean(true), false],
+    [new Boolean(true), new Boolean(false), false],
+    [new Boolean(false), new Boolean(false), true],
+  ];
+
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalObjectExcludeJson(a, b),
+      expected,
+      `equalObjectExcludeJson(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -299,6 +332,8 @@ Deno.test("equal", () => {
     [BigInt(1n), 1n, true],
     [BigInt(-1n), -1n, true],
     [BigInt(-0n), -0n, true],
+    [new Number(1), 1, false],
+    [new Number(1), Number(1), false],
     // string
     ["", "", true],
     ["hello", "hello", true],

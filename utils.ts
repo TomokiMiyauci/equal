@@ -21,4 +21,8 @@ const entriesSymbol = (
   >[];
   return symbols.map((symbol) => [symbol, val[symbol]]);
 };
-export { entriesSymbol, isJsonObject };
+
+const instanceOf = <T extends Function>(obj: T, val: unknown): val is T =>
+  val instanceof obj;
+
+export { entriesSymbol, instanceOf, isJsonObject };
