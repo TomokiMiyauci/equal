@@ -1,4 +1,5 @@
-import { isPrimitive, isArray, and, isObject, isFunction } from "./deps.ts";
+// Copyright 2021-present the Equal authors. All rights reserved. MIT license.
+import { and, isArray, isFunction, isObject, isPrimitive, N } from "./deps.ts";
 import { is as _is } from "./constants.ts";
 import { isJsonObject } from "./utils.ts";
 
@@ -12,8 +13,8 @@ const isBothArray = <T, U extends T>(a: T, b: U) =>
 
 const isBothObjectExcludeJSON = <T, U extends T>(a: T, b: U) =>
   [
-    and(isObject(a), isJsonObject(a)),
-    and(isObject(b), isJsonObject(b))
+    and(isObject(a), N(isJsonObject(a))),
+    and(isObject(b), N(isJsonObject(b))),
   ] as const;
 
 const isBothFunction = <T, U extends T>(a: T, b: U) =>
@@ -21,8 +22,8 @@ const isBothFunction = <T, U extends T>(a: T, b: U) =>
 
 const isBothJsonObject = <T, U extends T>(a: T, b: U) =>
   [isJsonObject(a), isJsonObject(b)] as const;
-const instanceofFactory = (obj: Function) => <T, U extends T>(a: T, b: U) =>
-  [a instanceof obj, b instanceof obj] as const;
+const instanceofFactory = (obj: Function) =>
+  <T, U extends T>(a: T, b: U) => [a instanceof obj, b instanceof obj] as const;
 
 const isBothDate = instanceofFactory(Date);
 const isBothRegExp = instanceofFactory(RegExp);
@@ -30,12 +31,12 @@ const isBothError = instanceofFactory(Error);
 
 export {
   is,
-  isBothPrimitive,
   isBothArray,
   isBothDate,
-  isBothRegExp,
   isBothError,
-  isBothObjectExcludeJSON,
   isBothFunction,
-  isBothJsonObject
+  isBothJsonObject,
+  isBothObjectExcludeJSON,
+  isBothPrimitive,
+  isBothRegExp,
 };

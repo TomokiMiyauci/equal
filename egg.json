@@ -1,0 +1,14 @@
+{
+  "$schema": "https://x.nest.land/eggs@0.3.6/src/schema.json",
+  "name": "equal",
+  "entry": "mod.ts",
+  "description": "Deep comparison between two values to determine if they are equivalent",
+  "homepage": "https://github.com/TomokiMiyauci/equal#readme",
+  "version": "0.0.0",
+  "files": ["README.md", "LICENSE", "*.ts"],
+  "ignore": [".git"],
+  "checkFormat": false,
+  "checkTests": false,
+  "checkInstallation": false,
+  "check": true
+}
