@@ -8,7 +8,7 @@ import { main, module } from "./package.json";
 const baseDir = resolve(__dirname);
 const inputFilePath = resolve(baseDir, "mod.ts");
 const banner =
-  "/*! Copyright (c) 2021-present TomokiMiyauci. All rights reserved. MIT license. */";
+  "/*! Copyright (c) 2021-present the Equal authors. All rights reserved. MIT license. */";
 
 const replaceOption = {
   ".ts": "",
