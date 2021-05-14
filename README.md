@@ -106,7 +106,7 @@ Browser is supporting since IE11.
 | - | - | - | - | - | - | - | - |
 | ^6.17.0 | IE11 / ^16 | ^60 | ^61 | ^10.1 | ^10.3 | ^8.2 | ^48 |
 
-Compared to `ES modules`, `UMD` has a bundle size increase of about 50%. Recommend using `ES modules` as much as possible.
+Compared to `ES modules`, `UMD` has a bundle size increase of about 2.5x. Recommend using `ES modules` as much as possible.
 
 ## :dizzy: Usage
 
