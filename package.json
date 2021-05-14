@@ -66,6 +66,7 @@
   },
   "browserslist": [
     "defaults",
-    "node 10"
+    "not IE 11",
+    "node 14"
   ]
 }
