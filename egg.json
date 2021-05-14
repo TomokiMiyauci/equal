@@ -5,7 +5,7 @@
   "description": "Deep comparison between two values to determine if they are equivalent",
   "homepage": "https://github.com/TomokiMiyauci/equal#readme",
   "version": "0.0.0",
-  "files": ["README.md", "LICENSE", "*.ts"],
+  "files": ["README.md", "LICENSE", "*.ts", "img/*"],
   "ignore": [".git"],
   "checkFormat": false,
   "checkTests": false,
