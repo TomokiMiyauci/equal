@@ -342,8 +342,6 @@ Deno.test("equal", () => {
     // string
     ["", "", true],
     ["hello", "hello", true],
-    [`hello`, `hello`, true],
-    [`hello`, "hello", true],
     [String(""), "", true],
     [String("hello"), String("hello"), true],
     [String(""), String(""), true],
