@@ -1,8 +1,12 @@
+<div align="center">
+  <img alt="logo image" src="img/logo.png"  />
 
-![logo image](img/logo.png)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/equal)
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/equal)
 ![npm version](https://img.shields.io/npm/v/lauqe.svg?style=flat)
+[![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/equal/mod.ts)
+![deno support version](https://img.shields.io/badge/deno-%3E%3D1.6.0-yellow)
+![node support version](https://img.shields.io/badge/node-%3E%3D10.24.0-blue)
 ![bundle size](https://img.shields.io/bundlephobia/min/lauqe)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
@@ -12,6 +16,8 @@
 ![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)
 ![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat)
 ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
+
+</div>
 
 # equal === lauqe
 
