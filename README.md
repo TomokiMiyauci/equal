@@ -16,17 +16,58 @@
 
 </div>
 
-# equal | lauqe
+# equal === lauqe
 
 > Deep comparison between two values to determine if they are equivalent
 
-## :truck: Install
+## :sparkles: Feature
 
-```bash
-npm i lauqe
-or
-yarn add lauqe
+- :zap: Multi runtime support (`Deno`, `Node.js` and Browsers)
+- :books: Pure TypeScript and provides type definition
+- :white_check_mark: [Rambda](https://selfrefactor.github.io/rambda/#/?id=equals)'s all test case is passed
+- :earth_americas: Universal module, providing `ES modules` and `UMD`
+- :package: Optimized, super slim size
+- :page_facing_up: TSDoc-style comments
+
+## 📝 API
+
+```ts
+declare const equal: <T, U extends T>(a: T, b: U) => boolean
 ```
+
+| Parameter | Description |
+| --------- | ----------- |
+| `a` | Any value |
+| `b` | Any value |
+
+`=>` Return `true` if the reference memory is the same or the property members and their values are the same
+
+### Definition of Equality
+
+Equality is defined as the data structure and property values are equivalent.
+
+#### Same-value-zero
+
+Numerical equivalence is based on [Same-value-zero](https://developer.mozilla.org/docs/Web/JavaScript/Equality_comparisons_and_sameness#same-value-zero_equality).  
+That is, all of the following comparisons are considered equivalent.
+
+```ts
+equal(NaN, NaN) // true
+equal(0, 0) // true
+equal(+0, 0) // true
+equal(-0, 0) // true
+equal(+0, -0) // true
+```
+
+## :green_heart: Supports
+
+Browser is supporting since IE11.
+
+The TypeScript version must be `4.1.0` or higher.
+
+| <img width="30px" height="30px" alt="Deno" src="./deno_hr_circle.svg"></br>Deno | <img width="24px" height="24px" alt="Node.js" src="./nodejs-icon.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>IE / Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
+| ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| >= 1.6.0                                                                        | >= 10.24.0 | IE11 / last 2 versions                                                             | last 2 versions                                                                                                                                      | last 2 versions                                                                                                                                               | last 2 versions                                                                                                                                           | last 2 versions                                                                                                                                           | last 2 versions                                                                                                                                                           | last 2 versions                                                                                                                                                                 |
 
 ## :dizzy: Usage
 
@@ -34,15 +75,12 @@ yarn add lauqe
 
 ### 🦕 Deno
 
-<details>
-<summary>Click to toggle contents of `code` </summary>
-
 #### deno.land
 
 ```ts
 import { equal } from "https://deno.land/x/equal/mod.ts";
 
-equal([[[]]], [[[]]]); // true
+equal([1, 2, 3], [1, 2, 3]); // true
 ```
 
 #### nest.land
@@ -50,45 +88,45 @@ equal([[[]]], [[[]]]); // true
 ```ts
 import { equal } from "https://x.nest.land/equal/mod.ts";
 
-equal([[[]]], [[[]]]); // true
+equal([1, ['hello', ['world']], [1, ['hello', ['world']]); // true
 ```
 
-</details>
+### :package: Node.js
 
-### :package: NPM
+> NPM package name is `lauqe` .
 
-<details>
-<summary>Click to toggle contents of `code` </summary>
+#### Install
+
+```bash
+npm i lauqe
+or
+yarn add lauqe
+```
 
 #### ESM
 
 ```ts
 import { equal } from "lauqe";
 
-equal([[[]]], [[[]]]); // true
+equal(new Date('2000/1/1'), new Date('2000/1/1')); // true
 ```
 
 #### UMD
 
 ```ts
-const { add } = require("lauqe");
+const { equal } = require("lauqe");
 
-equal([[[]]], [[[]]]); // true
+equal(/hello/g, /hello/g); // true
 ```
 
-</details>
-
-### :globe_with_meridians: CDN
-
-<details>
-<summary>Click to toggle contents of `code` </summary>
+### :globe_with_meridians: Browser
 
 #### ESM
 
 ```html
 <script type="module">
   import { equal } from "https://unpkg.com/lauqe?module";
-  console.log(equal({}, {})); // true
+  console.log(equal(() => {}, () => {}); // true
 </script>
 ```
 
@@ -98,12 +136,24 @@ equal([[[]]], [[[]]]); // true
 <script src="https://unpkg.com/lauqe"></script>
 
 <script>
-  console.log(E.equal({}, {})); // true
+  console.log(E.equal(NaN, NaN)); // true
 </script>
 ```
 
-</details>
+## 🤝 Contributing
+
+Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/TomokiMiyauci/equal/issues).
+
+## :seedling: Show your support
+
+Give a ⭐️ if this project helped you!
+
+<a href="https://www.patreon.com/tomoki_miyauci">
+  <img src="https://c5.patreon.com/external/logo/become_a_patron_button@2x.png" width="160">
+</a>
 
 ## :bulb: License
 
-[MIT](./LICENSE)
+Copyright © 2021-present [TomokiMiyauci](https://github.com/TomokiMiyauci).
+
+Released under the [MIT](./LICENSE) license
