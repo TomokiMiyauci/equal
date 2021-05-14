@@ -18,11 +18,11 @@ const replaceOption = {
 const config = [
   {
     input: inputFilePath,
-    // eslint-disable-next-line no-sparse-arrays
     plugins: [
       replace(replaceOption),
       ts({
         transpiler: "babel",
+        browserslist: ["defaults", "node 6", "supports es6-module"],
         tsconfig: (resolvedConfig) => ({
           ...resolvedConfig,
           declaration: false,
