@@ -1,3 +1,8 @@
+# [v1.0.2](https://github.com/TomokiMiyauci/equal/compare/v1.0.1...v1.0.2) (2021-05-14)
+
+## 🐛 Bug Fixes
+- [`7f45fd5`](https://github.com/TomokiMiyauci/equal/commit/7f45fd5)   Optimize bundle size with ES modules
+
 # [v1.0.2-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.0.1...v1.0.2-beta.1) (2021-05-14)
 
 ## 🐛 Bug Fixes
