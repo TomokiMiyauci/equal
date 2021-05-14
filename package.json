@@ -1,6 +1,6 @@
 {
   "name": "lauqe",
-  "description": "Deep comparison between two values to determine if they are equivalent",
+  "description": "(=equal) Deep comparison between two values to determine if they are equivalent",
   "version": "1.0.0-beta.1",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
@@ -63,5 +63,9 @@
   "funding": {
     "type": "patreon",
     "url": "https://www.patreon.com/tomoki_miyauci"
-  }
+  },
+  "browserslist": [
+    "defaults",
+    "node 10"
+  ]
 }
