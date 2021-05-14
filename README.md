@@ -1,5 +1,6 @@
 <div align="center">
 
+![logo image](img/logo.png)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/equal)
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/equal)
 
@@ -30,6 +31,8 @@
 - :page_facing_up: TSDoc-style comments
 
 ## 📝 API
+
+### Type definition
 
 ```ts
 declare const equal: <T, U extends T>(a: T, b: U) => boolean
