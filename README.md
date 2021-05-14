@@ -1,12 +1,13 @@
 <div align="center">
   <img alt="logo image" src="img/logo.png"  />
 
+[![test](https://github.com/TomokiMiyauci/equal/actions/workflows/test.yml/badge.svg)](https://github.com/TomokiMiyauci/equal/actions/workflows/test.yml)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/equal)
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/equal)
-![npm version](https://img.shields.io/npm/v/lauqe.svg?style=flat)
+[![GitHub release](https://img.shields.io/github/release/TomokiMiyauci/equal.svg)](https://github.com/TomokiMiyauci/equal/releases)
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/equal/mod.ts)
-![deno support version](https://img.shields.io/badge/deno-%3E%3D1.6.0-yellow)
-![node support version](https://img.shields.io/badge/node-%3E%3D10.24.0-blue)
+[![deno version](https://img.shields.io/badge/deno-^1.6.0-lightgrey?logo=deno)](https://github.com/denoland/deno)
+![node support version](https://img.shields.io/badge/node-%5E10.24.0-yellow)
 ![bundle size](https://img.shields.io/bundlephobia/min/lauqe)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
