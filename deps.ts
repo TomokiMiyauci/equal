@@ -9,6 +9,7 @@ export {
   isArray,
   isBoolean,
   isFunction,
+  isJSONObject,
   isNumber,
   isObject,
   isPrimitive,
@@ -17,6 +18,6 @@ export {
   N,
   or,
   xor,
-} from "https://deno.land/x/fonction@v1.6.2/mod.ts";
+} from "https://deno.land/x/fonction@v1.7.0/mod.ts";
 
-export type { AnyFn } from "https://deno.land/x/fonction@v1.6.2/mod.ts";
+export type { AnyFn } from "https://deno.land/x/fonction@v1.7.0/mod.ts";

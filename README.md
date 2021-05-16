@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="logo image" src="img/logo.png"  />
+  <img alt="logo image" src="img/logo.png" />
   <h1 align="center">equal</h1>
 </p>
 
@@ -7,15 +7,18 @@
 Deep comparison between two values to determine if they are equivalent
 </p>
 
+<div align="center">
+
 [![test](https://github.com/TomokiMiyauci/equal/actions/workflows/test.yml/badge.svg)](https://github.com/TomokiMiyauci/equal/actions/workflows/test.yml)
 [![GitHub release](https://img.shields.io/github/release/TomokiMiyauci/equal.svg)](https://github.com/TomokiMiyauci/equal/releases)
 [![deno land](http://img.shields.io/badge/available%20on-deno.land/x-lightgrey.svg?logo=deno&labelColor=black)](https://deno.land/x/equal)
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/equal)
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/equal/mod.ts)
 [![deno version](https://img.shields.io/badge/deno-^1.6.0-lightgrey?logo=deno)](https://github.com/denoland/deno)
-![node support version](https://img.shields.io/badge/node-%5E10.24.0-yellow)
+![node support version](https://img.shields.io/badge/node-%5E14.16.0-yellow)
 ![bundle size](https://img.shields.io/bundlephobia/min/lauqe)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
+
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
 [![codecov](https://codecov.io/gh/TomokiMiyauci/equal/branch/main/graph/badge.svg?token=SPAi5Pv2wd)](https://codecov.io/gh/TomokiMiyauci/equal)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f43b1c317e11445399d85ce6efc06504)](https://www.codacy.com/gh/TomokiMiyauci/equal/dashboard?utm_source=github.com&utm_medium=referral&utm_content=TomokiMiyauci/equal&utm_campaign=Badge_Grade)
@@ -24,6 +27,8 @@ Deep comparison between two values to determine if they are equivalent
 ![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat)
 ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
+</div>
 
 ---
 
