@@ -1,17 +1,6 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { isFunction } from "./deps.ts";
-import { is as _is, JSON_OBJECT } from "./constants.ts";
+import { is as _is } from "./constants.ts";
 import { getOwnPropertySymbols } from "./constants.ts";
-
-const getConstructorName = (val: unknown): string => {
-  if (isFunction(val as any).constructor) {
-    return (val as any).constructor.name ?? "";
-  }
-  return "";
-};
-
-const isJsonObject = <T extends unknown>(val: T): val is T =>
-  getConstructorName(val) === JSON_OBJECT;
 
 const entriesSymbol = (
   val: Record<PropertyKey, unknown>,
@@ -26,4 +15,6 @@ const entriesSymbol = (
 const instanceOf = <T extends Function>(obj: T, val: unknown): val is T =>
   val instanceof obj;
 
-export { entriesSymbol, instanceOf, isJsonObject };
+const is = <T, U extends T>(a: T, b: U): boolean => _is(a, b);
+
+export { entriesSymbol, instanceOf, is };

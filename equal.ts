@@ -1,18 +1,17 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { and, AnyFn, entries, F, has, length, N, xor } from "./deps.ts";
 import {
-  is,
   isBothArray,
   isBothDate,
   isBothError,
   isBothFunction,
-  isBothJsonObject,
+  isBothJSONObject,
   isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
 } from "./is.ts";
-import { entriesSymbol, instanceOf } from "./utils.ts";
+import { entriesSymbol, instanceOf, is } from "./utils.ts";
 
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
@@ -42,7 +41,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   const verdictTable: Verdict[] = [
     [isBothNumber, (a: unknown, b: unknown) => a === b],
     [isBothPrimitive, F],
-    [isBothJsonObject, equalJsonObject],
+    [isBothJSONObject, equalJsonObject],
     [isBothArray, equalArray],
     [isBothDate, equalDate],
     [isBothFunction, equalFunction],
@@ -66,7 +65,7 @@ const equalDate = <T extends Date, U extends T>(a: T, b: U): boolean =>
   a.getTime() === b.getTime();
 
 const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
-  and(a.message === b.message, a.toString() === b.toString());
+  and(a.message === b.message, () => a.toString() === b.toString());
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
@@ -83,7 +82,7 @@ const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   if (lenA !== lenB) return false;
 
   return entriesA.every(([key, value]) =>
-    and(has(key, b), equal(value, b[key]))
+    and(has(key, b), () => equal(value, b[key]))
   );
 };
 
@@ -96,7 +95,7 @@ const equalObjectExcludeJson = <
 ): boolean => {
   if (
     [Number, String, Boolean].some((obj) =>
-      and(instanceOf(obj, a), instanceOf(obj, b))
+      and(instanceOf(obj, a), () => instanceOf(obj, b))
     )
   ) {
     return equal(a.valueOf(), b.valueOf());
@@ -108,7 +107,7 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   const lenA = length(a);
   const lenB = length(b);
 
-  if (and(N(lenA), N(lenB))) return true;
+  if (and(N(lenA), () => N(lenB))) return true;
   if (lenA !== lenB) return false;
 
   return a.every((v, index) => equal(v, b[index]));

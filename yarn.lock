@@ -2734,9 +2734,9 @@ findup-sync@^4.0.0:
     resolve-dir "^1.0.1"
 
 fonction@^1.6.2:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.6.2.tgz#06fea8f2af4d300360056f95f15d87ca641a676e"
-  integrity sha512-F3/lUGqcwGEwqWlM6Ms15EnZy4yvYYu5VISwW54fy+MO24USTDI5kV8MmV8VfFDynY75CBSuCdNxs6etHN1wCQ==
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.7.0.tgz#bdb22b057ab9f62c2a780f9cf84fb04a465262b5"
+  integrity sha512-4Nhx2twBidrZD9QRH5r6pJkrsxI/qf6Kp4KfwgwxOonzIPLNKl1zsjAQELAsQujrxDLQWfWWzt7qmqnjhUkpAg==
 
 forever-agent@~0.6.1:
   version "0.6.1"

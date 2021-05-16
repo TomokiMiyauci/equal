@@ -12,7 +12,7 @@ const banner =
 
 const replaceOption = {
   ".ts": "",
-  "https://deno.land/x/fonction@v1.6.2/mod": "fonction",
+  "https://deno.land/x/fonction@v1.7.0/mod": "fonction",
   preventAssignment: true,
 };
 const config = [

@@ -1,6 +1,6 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { assertEquals, isSymbol } from "./dev_deps.ts";
-import { is } from "./is.ts";
+import { is } from "./utils.ts";
 
 Deno.test("is", () => {
   const symbol = Symbol("hello");
