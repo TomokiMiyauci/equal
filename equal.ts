@@ -110,7 +110,7 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   if (and(N(lenA), () => N(lenB))) return true;
   if (lenA !== lenB) return false;
 
-  return a.every((v, index) => equal(v, b[index]));
+  return a.every((val, index) => equal(val, b[index]));
 };
 
 export {
