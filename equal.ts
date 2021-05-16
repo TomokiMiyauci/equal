@@ -11,8 +11,8 @@ import {
   isBothPrimitive,
   isBothRegExp,
 } from "./is.ts";
-import { entriesSymbol, instanceOf, is } from "./utils.ts";
-
+import { entriesSymbol, instanceOf } from "./utils.ts";
+import { is } from "./constants.ts";
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
   AnyFn<any, boolean>,
