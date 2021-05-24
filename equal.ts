@@ -1,11 +1,12 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { and, AnyFn, entries, F, has, length, N, xor } from "./deps.ts";
+import { and, AnyFn, entries, F, has, length, N, or, xor } from "./deps.ts";
 import {
   isBothArray,
   isBothDate,
   isBothError,
   isBothFunction,
   isBothJSONObject,
+  isBothMap,
   isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
@@ -47,6 +48,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothFunction, equalFunction],
     [isBothRegExp, equalRegExp],
     [isBothError, equalError],
+    [isBothMap, equalMap],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
   ];
 
@@ -69,6 +71,45 @@ const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
+
+const equalMap = <T extends Map<any, any>, U extends T>(
+  a: T,
+  b: U,
+): boolean => {
+  if (a.size !== b.size) return false;
+
+  for (const [key, value] of a.entries()) {
+    if (or(N(b.has(key)), () => N(equal(b.get(key), value)))) {
+      return false;
+    }
+  }
+
+  return true;
+  // if (isLength0(tmp)) return true;
+
+  // const tma: [unknown, unknown][] = [];
+  // b.forEach((val, key) => {
+  //   if (isObject(key)) {
+  //     tma.push([key, val]);
+  //   }
+  // });
+
+  // return equalArrayNoOrder(tmp, tma);
+};
+
+// const equalArrayNoOrder = <T extends unknown[], U extends T>(
+//   a: T,
+//   b: U,
+// ): boolean => {
+//   if (length(a) !== length(b)) return false;
+
+//   for (const d of a) {
+//     const result = b.filter((c) => !equal(d, c));
+//     console.log(d, result, result.length);
+//     return isLength0(result);
+//   }
+//   return true;
+// };
 
 const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   a: T,
@@ -120,6 +161,7 @@ export {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalMap,
   equalObjectExcludeJson,
   equalRegExp,
 };
