@@ -1,3 +1,8 @@
+# [v1.1.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.0.2...v1.1.0-beta.1) (2021-05-24)
+
+## ✨ New Features
+- [`c321ef6`](https://github.com/TomokiMiyauci/equal/commit/c321ef6)   Add equality of Map does not use Object for key
+
 # [v1.0.2](https://github.com/TomokiMiyauci/equal/compare/v1.0.1...v1.0.2) (2021-05-14)
 
 ## 🐛 Bug Fixes
