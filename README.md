@@ -35,6 +35,7 @@ Deep comparison between two values to determine if they are equivalent
 ## Table of Contents
 
 - [Features](#sparkles-features)
+- [Example](#zap-example)
 - [API](#memo-api)
 - [Supports](#green_heart-supports)
 - [Usage](#dizzy-usage)
@@ -57,7 +58,7 @@ Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land](https://nest.
 
 Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
 
-## Example
+## :zap: Example
 
 ```ts
 equal('', '') // true
