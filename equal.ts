@@ -78,38 +78,22 @@ const equalMap = <T extends Map<any, any>, U extends T>(
 ): boolean => {
   if (a.size !== b.size) return false;
 
-  for (const [key, value] of a.entries()) {
-    if (or(N(b.has(key)), () => N(equal(b.get(key), value)))) {
-      return false;
-    }
-  }
-
-  return true;
-  // if (isLength0(tmp)) return true;
-
-  // const tma: [unknown, unknown][] = [];
-  // b.forEach((val, key) => {
-  //   if (isObject(key)) {
-  //     tma.push([key, val]);
-  //   }
-  // });
-
-  // return equalArrayNoOrder(tmp, tma);
+  return equalKeyValueTupleNoOrder([...a], [...b]);
 };
 
-// const equalArrayNoOrder = <T extends unknown[], U extends T>(
-//   a: T,
-//   b: U,
-// ): boolean => {
-//   if (length(a) !== length(b)) return false;
+const equalKeyValueTuple = <T extends [unknown, unknown], U extends T>(
+  [keyA, valueA]: T,
+  [keyB, valueB]: U,
+): boolean => and(equal(keyA, keyB), () => equal(valueA, valueB));
 
-//   for (const d of a) {
-//     const result = b.filter((c) => !equal(d, c));
-//     console.log(d, result, result.length);
-//     return isLength0(result);
-//   }
-//   return true;
-// };
+const equalKeyValueTupleNoOrder = <T extends [unknown, unknown][], U extends T>(
+  a: T,
+  b: U,
+): boolean => {
+  return a.every((tupleA) =>
+    b.some((tupleB) => equalKeyValueTuple(tupleA, tupleB))
+  );
+};
 
 const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   a: T,
@@ -161,6 +145,8 @@ export {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalKeyValueTuple,
+  equalKeyValueTupleNoOrder,
   equalMap,
   equalObjectExcludeJson,
   equalRegExp,
