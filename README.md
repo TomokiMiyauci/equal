@@ -22,7 +22,7 @@ Deep comparison between two values to determine if they are equivalent
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
 [![codecov](https://codecov.io/gh/TomokiMiyauci/equal/branch/main/graph/badge.svg?token=SPAi5Pv2wd)](https://codecov.io/gh/TomokiMiyauci/equal)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f43b1c317e11445399d85ce6efc06504)](https://www.codacy.com/gh/TomokiMiyauci/equal/dashboard?utm_source=github.com&utm_medium=referral&utm_content=TomokiMiyauci/equal&utm_campaign=Badge_Grade)
-![npm type definitions](https://img.shields.io/npm/types/arithmetic4)
+![npm type definitions](https://img.shields.io/npm/types/lauqe)
 ![Commitizen friendly](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg)
 ![Gitmoji](https://img.shields.io/badge/gitmoji-%20😜%20😍-FFDD67.svg?style=flat)
 ![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)
@@ -35,6 +35,7 @@ Deep comparison between two values to determine if they are equivalent
 ## Table of Contents
 
 - [Features](#sparkles-features)
+- [Example](#zap-example)
 - [API](#memo-api)
 - [Supports](#green_heart-supports)
 - [Usage](#dizzy-usage)
@@ -53,9 +54,53 @@ Deep comparison between two values to determine if they are equivalent
 
 ### Package name
 
-Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land]())
+Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land](https://nest.land/package/equal))
 
 Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
+
+## :zap: Example
+
+```ts
+equal('', '') // true
+equal(NaN, NaN) // true
+equal(0, 0) // true
+equal(+0, 0) // true
+equal(-0, 0) // true
+equal(+0, -0) // true
+equal(0n, 0n) // true
+equal(undefined, undefined) // true
+equal(null, null) // true
+equal(undefined, null) // false
+equal(true, false) // false
+const symbol = Symbol("hello");
+equal(symbol, symbol) // true
+equal(Symbol('hello'), Symbol('hello')) // false
+
+equal({}, {}) // true
+equal({ "": undefined }, { "": undefined }) // true
+equal({ "": undefined }, { "": undefined, a: 1 }) // false
+equal({ a: 1, b: undefined}, { b: undefined, a: 1}) // true
+equal([], []) // true
+equal([[[]]], [[[]]]) // true
+equal([[{ a: [] }]], [{ a: [] }]) // true
+equal(new Date("2000/1/1"), new Date("2000/1/1")) // true
+equal(new Date("2000/1/1"), new Date("2000/1/1 00:00:01")) // false
+equal(() => true, () => true) // true
+equal(() => true, () => false) // false
+equal(Error('hoge'), Error('hoge')) // true
+equal(Error('hoge'), Error('huga')) // false
+equal(TypeError('hoge'), TypeError('hoge')) // true
+equal(Error('hoge'), TypeError('hoge')) // false
+equal(/s/, /s/) // true
+equal(/s/, /t/) // false
+equal(/s/gi, /s/gi) // true
+equal(/s/gi, /s/gim) // false
+equal(new String('hello'), new String('hello')) // true
+equal(new Number(0), new Number(0)) // true
+equal(new Boolean(true), new Boolean(true)) // true
+equal(new Map([[1, 2], [3, 4]]), new Map([[3, 4], [1, 2]]) // true
+equal(new Map([[new Map(), { a: 1 } ]), new Map([[new Map(), { a: 1 } ]) // true
+```
 
 ## :memo: API
 
@@ -89,6 +134,23 @@ equal(-0, 0) // true
 equal(+0, -0) // true
 ```
 
+#### Built-in object
+
+The following objects work correctly.
+
+- `Array`
+- `Object` (JSONObject, `{}`)
+- `Date`
+- `Error`
+- `TypeError`
+- `RegExp`
+- `Map`
+- `String`
+- `Number`
+- `Boolean`
+
+**Do not guarantee** the behavior of objects not on this list.
+
 ## :green_heart: Supports
 
 The TypeScript version must be `4.1.0` or higher.
@@ -99,7 +161,7 @@ This project provide `ES modules` and `UMD`. The range supported by both is diff
 
 Limit support to the latest environment to reduce the bundle size.
 
-| <img width="30px" height="30px" alt="Deno" src="./img/deno.svg"></br>Deno | <img width="24px" height="24px" alt="Node.js" src="./img/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
+| <img width="30px" height="30px" alt="Deno" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/deno.svg"></br>Deno | <img width="24px" height="24px" alt="Node.js" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
 | - | -- | - | -- | - | - | - | -- | -- |
 | ^1.6.0 | ^14.16.0 | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
 
@@ -107,7 +169,7 @@ Limit support to the latest environment to reduce the bundle size.
 
 Browser is supporting since IE11.
 
-| <img width="24px" height="24px" alt="Node.js" src="./img/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>IE / Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
+| <img width="24px" height="24px" alt="Node.js" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>IE / Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
 | - | - | - | - | - | - | - | - |
 | ^6.17.0 | IE11 / ^16 | ^60 | ^61 | ^10.1 | ^10.3 | ^8.2 | ^48 |
 
@@ -189,6 +251,8 @@ equal(/hello/g, /hello/g); // true
 ## :handshake: Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/TomokiMiyauci/equal/issues).
+
+[Contributing guide](./.github/CONTRIBUTING.md)
 
 ## :seedling: Show your support
 

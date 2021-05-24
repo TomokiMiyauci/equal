@@ -29,6 +29,7 @@ const isBothObjectExcludeJSON = isTupleFactory(isObjectExcludeJSON);
 const isBothDate = instanceofFactory(Date);
 const isBothRegExp = instanceofFactory(RegExp);
 const isBothError = instanceofFactory(Error);
+const isBothMap = instanceofFactory(Map);
 
 export {
   isBothArray,
@@ -36,6 +37,7 @@ export {
   isBothError,
   isBothFunction,
   isBothJSONObject,
+  isBothMap,
   isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,

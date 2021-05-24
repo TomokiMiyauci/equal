@@ -6,13 +6,14 @@ import {
   isBothError,
   isBothFunction,
   isBothJSONObject,
+  isBothMap,
   isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
 } from "./is.ts";
-import { entriesSymbol, instanceOf, is } from "./utils.ts";
-
+import { entriesSymbol, instanceOf } from "./utils.ts";
+import { is } from "./constants.ts";
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
   AnyFn<any, boolean>,
@@ -47,6 +48,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothFunction, equalFunction],
     [isBothRegExp, equalRegExp],
     [isBothError, equalError],
+    [isBothMap, equalMap],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
   ];
 
@@ -69,6 +71,29 @@ const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
+
+const equalMap = <T extends Map<any, any>, U extends T>(
+  a: T,
+  b: U,
+): boolean => {
+  if (a.size !== b.size) return false;
+
+  return equalKeyValueTupleNoOrder([...a], [...b]);
+};
+
+const equalKeyValueTuple = <T extends [unknown, unknown], U extends T>(
+  [keyA, valueA]: T,
+  [keyB, valueB]: U,
+): boolean => and(equal(keyA, keyB), () => equal(valueA, valueB));
+
+const equalKeyValueTupleNoOrder = <T extends [unknown, unknown][], U extends T>(
+  a: T,
+  b: U,
+): boolean => {
+  return a.every((tupleA) =>
+    b.some((tupleB) => equalKeyValueTuple(tupleA, tupleB))
+  );
+};
 
 const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   a: T,
@@ -110,7 +135,7 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   if (and(N(lenA), () => N(lenB))) return true;
   if (lenA !== lenB) return false;
 
-  return a.every((v, index) => equal(v, b[index]));
+  return a.every((val, index) => equal(val, b[index]));
 };
 
 export {
@@ -120,6 +145,9 @@ export {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalKeyValueTuple,
+  equalKeyValueTupleNoOrder,
+  equalMap,
   equalObjectExcludeJson,
   equalRegExp,
 };

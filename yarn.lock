@@ -2733,10 +2733,10 @@ findup-sync@^4.0.0:
     micromatch "^4.0.2"
     resolve-dir "^1.0.1"
 
-fonction@^1.6.2:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.7.0.tgz#bdb22b057ab9f62c2a780f9cf84fb04a465262b5"
-  integrity sha512-4Nhx2twBidrZD9QRH5r6pJkrsxI/qf6Kp4KfwgwxOonzIPLNKl1zsjAQELAsQujrxDLQWfWWzt7qmqnjhUkpAg==
+fonction@^1.8.0-beta.6:
+  version "1.8.0-beta.6"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.8.0-beta.6.tgz#96726962f17a568bdfc25fd10760ecb876970e4a"
+  integrity sha512-bO48VXFJSuGQcG1MsfMaHQDrRog6dYvE4s7cOOSu9SBMA+zOXqY45/wVcr1UU8a0Lp8pLDPIhj/Gjf5Umaz3EQ==
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -5053,9 +5053,9 @@ rollup-plugin-ts@^1.3.12:
     tslib "^2.2.0"
 
 rollup@^2.47.0:
-  version "2.48.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.48.0.tgz#fceb01ed771f991f29f7bd2ff7838146e55acb74"
-  integrity sha512-wl9ZSSSsi5579oscSDYSzGn092tCS076YB+TQrzsGuSfYyJeep8eEWj0eaRjuC5McuMNmcnR8icBqiE/FWNB1A==
+  version "2.49.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.49.0.tgz#f0e5bb2b770ddf1be8cc30d4cce3457574c8c871"
+  integrity sha512-UnrCjMXICx9q0jF8L7OYs7LPk95dW0U5UYp/VANnWqfuhyr66FWi/YVlI34Oy8Tp4ZGLcaUDt4APJm80b9oPWQ==
   optionalDependencies:
     fsevents "~2.3.1"
 

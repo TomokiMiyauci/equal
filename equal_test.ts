@@ -7,6 +7,9 @@ import {
   equalError,
   equalFunction,
   equalJsonObject,
+  equalKeyValueTuple,
+  equalKeyValueTupleNoOrder,
+  equalMap,
   equalObjectExcludeJson,
   equalRegExp,
 } from "./equal.ts";
@@ -213,6 +216,9 @@ Deno.test("equalArray", () => {
       ],
       true,
     ],
+
+    [[[]], [[]], true],
+    [[[1, null]], [[1, null]], true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(equalArray(a, b), expected, `equalArray(?, ?) -> ${expected}`);
@@ -226,7 +232,6 @@ Deno.test("equalRegExp", () => {
     [/a/gi, /a/gi, true],
     [/a/gim, /a/gim, true],
     [/a/gi, /a/i, false],
-    // date
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
@@ -257,6 +262,7 @@ Deno.test("equalDate", () => {
   const table: [Date, Date, boolean][] = [
     [new Date(0), new Date(0), true],
     [new Date(0), new Date("1999/1/1"), false],
+    [new Date("1999/1/1 00:00:01"), new Date("1999/1/1"), false],
     [new Date(1), new Date(0), false],
     [new Date(0), new Date(1), false],
   ];
@@ -292,6 +298,255 @@ Deno.test("equalFunction", () => {
       equalFunction(a, b),
       expected,
       `equalFunction(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalKeyValueTuple", () => {
+  const symbol = Symbol("hoge");
+
+  const table: [[unknown, unknown], [unknown, unknown], boolean][] = [
+    [["", ""], ["", ""], true],
+    [["a", "b"], ["a", "b"], true],
+    [["a", "b"], ["a", "c"], false],
+    [[1, 2], [1, 2], true],
+    [[undefined, null], [null, undefined], false],
+    [[symbol, ""], [symbol, ""], true],
+    [[symbol, ""], [symbol, "a"], false],
+    [[1n, 0], [0, 1n], false],
+    [[1n, 0], [1n, 0], true],
+    [[{}, 0], [{}, 0], true],
+    [[[], 0], [[], 0], true],
+    [[[], {}], [[], 0], false],
+    [[[], {}], [[], {}], true],
+    [[[[[]]], {}], [[[[]]], {}], true],
+    [[[[[]]], {}], [[[[1]]], {}], false],
+    [[[[[]]], { a: [] }], [[[[]]], {}], false],
+    [[[[[]]], { a: [] }], [[[[]]], { a: [] }], true],
+    [[new Date(0), {}], [new Date(0), {}], true],
+    [[new Date(1), {}], [new Date(0), {}], false],
+    [[new Date(1), new Date(0)], [new Date(0), new Date(1)], false],
+    [[new Date(1), new Date(0)], [new Date(1), new Date(0)], true],
+    [[/s/, ""], [/s/, ""], true],
+    [[/s/, ""], [/s/g, ""], false],
+    [[/s/, /a/gim], [/s/, /a/gim], true],
+    [[Error(), ""], [Error(), ""], true],
+    [[Error(), ""], [Error(), "a"], false],
+    [[Error("hello"), ""], [Error("hello"), ""], true],
+    [[Error("hello"), Error("world")], [Error("hello"), Error("world")], true],
+    [[Error("hello"), Error("world")], [Error("hello"), Error("hell")], false],
+    [
+      [TypeError("hello"), Error("world")],
+      [TypeError("hello"), Error("world")],
+      true,
+    ],
+    [
+      [new Map(), ""],
+      [new Map(), ""],
+      true,
+    ],
+    [
+      [new Map([]), ""],
+      [new Map([]), ""],
+      true,
+    ],
+    [
+      [new Map([["", ""]]), ""],
+      [new Map([]), ""],
+      false,
+    ],
+    [
+      [new Map([["", ""]]), ""],
+      [new Map([["", ""]]), ""],
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalKeyValueTuple(a, b),
+      expected,
+      `equalKeyValueTuple() -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalKeyValueTupleNoOrder", () => {
+  const table: [[unknown, unknown][], [unknown, unknown][], boolean][] = [
+    [[], [], true],
+    [[[1, 2], [3, 4]], [[1, 2]], false],
+    [[[1, 2], [3, 4]], [[1, 2], [1, 2]], false],
+    [[[1, 2], [1, 2]], [[1, 2], [3, 4]], true],
+    [[[undefined, null], [null, undefined]], [[null, undefined]], false],
+    [[[undefined, null], [null, undefined]], [[null, undefined], [
+      undefined,
+      null,
+    ]], true],
+    [[[undefined, null], [null, undefined]], [[null, undefined], [
+      undefined,
+      undefined,
+    ]], false],
+    [[[1, ""]], [[1, ""]], true],
+    [[[1, ""]], [[2, ""]], false],
+    // [[[1, ""]], [[2, ""], [1, ""]], false],
+    [[[1, ""], [2, ""]], [[2, ""], [1, ""]], true],
+    [[["", ""]], [["", ""]], true],
+    [[["", ""], [1, 2], [null, undefined]], [[null, undefined], ["", ""], [
+      1,
+      2,
+    ]], true],
+    [[["", "a"], [1, 2], [null, undefined]], [[null, undefined], ["", ""], [
+      1,
+      2,
+    ]], false],
+    [[[undefined, ""]], [[undefined, ""]], true],
+    [[[{}, ""]], [[{}, ""]], true],
+    [[[{}, ""]], [[[], ""]], false],
+    [[[new Map(), { a: 1 }]], [[new Map(), { a: 1 }]], true],
+    [[[new Map(), { a: 1 }]], [[new Map(), { a: 2 }]], false],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalKeyValueTupleNoOrder(a, b),
+      expected,
+      `equalKeyValueTupleNoOrder() -> ${expected}`,
+    );
+  });
+});
+
+assertEquals(new Map().size, 0);
+assertEquals(new Map().set("", "").size, 1);
+assertEquals(new Map().set(undefined, "").size, 1);
+assertEquals(new Map().set(undefined, undefined).size, 1);
+assertEquals(new Map().set(undefined, null).size, 1);
+assertEquals(new Map().set(null, null).size, 1);
+assertEquals(new Map().set(0, null).size, 1);
+assertEquals(new Map().set(Symbol(""), null).size, 1);
+assertEquals(new Map().set(new Map(), null).size, 1);
+assertEquals(new Map().set(new Map(), new Map()).size, 1);
+
+Deno.test("equalMap", () => {
+  const table: [Map<any, any>, Map<any, any>, boolean][] = [
+    [new Map(), new Map(), true],
+    [new Map([["", ""], ["hoge", "hoge"]]), new Map(), false],
+    [new Map([[undefined, ""]]), new Map([[undefined, ""]]), true],
+    [
+      new Map([[undefined, ""], [null, "a"]]),
+      new Map([[undefined, ""]]),
+      false,
+    ],
+    [
+      new Map([[undefined, ""], [null, "a"]]),
+      new Map([[undefined, ""], [null, "a"]]),
+      true,
+    ],
+    [
+      new Map([[null, "a"], [undefined, ""]]),
+      new Map([[undefined, ""], [null, "a"]]),
+      true,
+    ],
+    [
+      new Map([[{}, "a"]]),
+      new Map([[{}, "a"]]),
+      true,
+    ],
+    [
+      new Map([[[], "a"]]),
+      new Map([[[], "a"]]),
+      true,
+    ],
+
+    [
+      new Map([[undefined, ""], [null, "a"], [1, "1"]]),
+      new Map([[undefined, ""], [null, "a"], [1, "1"]]),
+      true,
+    ],
+    [
+      new Map([[null, {
+        null: "",
+      }]]),
+      new Map([[null, {
+        null: "",
+      }]]),
+      true,
+    ],
+    [
+      new Map([[null, {
+        null: {},
+        1: [],
+        "": 2,
+      }]]),
+      new Map([[null, {
+        null: {},
+        1: [],
+        "": 2,
+      }]]),
+      true,
+    ],
+    [
+      new Map([[null, {
+        null: {
+          "": "",
+          a: undefined,
+          b: null,
+          c: [],
+          d: {},
+        },
+        1: ["", 1, undefined, null, [], {}],
+      }]]),
+      new Map([[null, {
+        null: {
+          "": "",
+          a: undefined,
+          b: null,
+          c: [],
+          d: {},
+        },
+        1: ["", 1, undefined, null, [], {}],
+      }]]),
+      true,
+    ],
+    [new Map(), new Map([["", ""]]), false],
+    [new Map([["", ""]]), new Map(), false],
+    [new Map([["", ""]]), new Map([["", ""]]), true],
+    [new Map().set("a", ""), new Map().set("", ""), false],
+    [new Map().set("", []), new Map().set("", []), true],
+    [new Map().set("", 1), new Map().set("", 1), true],
+    [new Map().set("", undefined), new Map().set("", undefined), true],
+    [new Map().set("a", undefined), new Map().set("a", undefined), true],
+    [new Map().set("", null), new Map().set("", null), true],
+    [new Map().set("", 0), new Map().set("", 0), true],
+    [new Map().set("", 1), new Map().set("", 1), true],
+    [new Map().set("", {}), new Map().set("", {}), true],
+    [new Map().set("", new Map()), new Map().set("", new Map()), true],
+    [new Map([[[], []]]), new Map([[[], []]]), true],
+    [
+      new Map([[
+        { a: "", b: "huga", c: [], d: 1, e: new Date(0), f: new Map() },
+        "",
+      ]]),
+      new Map([[
+        { a: "", b: "huga", c: [], d: 1, e: new Date(0), f: new Map() },
+        "",
+      ]]),
+      true,
+    ],
+    [
+      new Map([[
+        { a: "", b: "huga", c: [], d: 1, e: new Date(0), f: new Map() },
+        "a",
+      ]]),
+      new Map([[
+        { a: "", b: "huga", c: [], d: 1, e: new Date(0), f: new Map() },
+        "b",
+      ]]),
+      false,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalMap(a, b),
+      expected,
+      `equalMap(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -391,6 +646,16 @@ Deno.test("equal", () => {
     [new Date(0), {}, false],
     [{}, new Date(0), false],
 
+    [new Map(), new Map(), true],
+    [new Map([[1, 2]]), new Map([[1, 2]]), true],
+    [new Map([[{}, 2]]), new Map([[{}, 2]]), true],
+    [new Map([[{}, 1], [[], 2]]), new Map([[[], 2], [{}, 1]]), true],
+    [new Map([[{}, 2], [[], 1]]), new Map([[[], 2], [{}, 1]]), false],
+    [
+      new Map().set(new Map(), new Map()),
+      new Map().set(new Map(), new Map()),
+      true,
+    ],
     [new Set(), new Set(), false],
     [new Set(), new Set([]), false],
   ];
