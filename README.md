@@ -99,6 +99,7 @@ equal(new String('hello'), new String('hello')) // true
 equal(new Number(0), new Number(0)) // true
 equal(new Boolean(true), new Boolean(true)) // true
 equal(new Map([[1, 2], [3, 4]]), new Map([[3, 4], [1, 2]]) // true
+equal(new Map([[new Map(), { a: 1 } ]), new Map([[new Map(), { a: 1 } ]) // true
 ```
 
 ## :memo: API
@@ -143,6 +144,7 @@ The following objects work correctly.
 - `Error`
 - `TypeError`
 - `RegExp`
+- `Map`
 - `String`
 - `Number`
 - `Boolean`
@@ -249,6 +251,8 @@ equal(/hello/g, /hello/g); // true
 ## :handshake: Contributing
 
 Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/TomokiMiyauci/equal/issues).
+
+[Contributing guide](./.github/CONTRIBUTING.md)
 
 ## :seedling: Show your support
 
