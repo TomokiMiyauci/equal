@@ -230,7 +230,6 @@ Deno.test("equalRegExp", () => {
     [/a/gi, /a/gi, true],
     [/a/gim, /a/gim, true],
     [/a/gi, /a/i, false],
-    // date
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
@@ -261,6 +260,7 @@ Deno.test("equalDate", () => {
   const table: [Date, Date, boolean][] = [
     [new Date(0), new Date(0), true],
     [new Date(0), new Date("1999/1/1"), false],
+    [new Date("1999/1/1 00:00:01"), new Date("1999/1/1"), false],
     [new Date(1), new Date(0), false],
     [new Date(0), new Date(1), false],
   ];
