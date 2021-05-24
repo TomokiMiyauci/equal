@@ -53,9 +53,52 @@ Deep comparison between two values to determine if they are equivalent
 
 ### Package name
 
-Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land]())
+Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land](https://nest.land/package/equal))
 
 Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
+
+## Example
+
+```ts
+equal('', '') // true
+equal(NaN, NaN) // true
+equal(0, 0) // true
+equal(+0, 0) // true
+equal(-0, 0) // true
+equal(+0, -0) // true
+equal(0n, 0n) // true
+equal(undefined, undefined) // true
+equal(null, null) // true
+equal(undefined, null) // false
+equal(true, false) // false
+const symbol = Symbol("hello");
+equal(symbol, symbol) // true
+equal(Symbol('hello'), Symbol('hello')) // false
+
+equal({}, {}) // true
+equal({ "": undefined }, { "": undefined }) // true
+equal({ "": undefined }, { "": undefined, a: 1 }) // false
+equal({ a: 1, b: undefined}, { b: undefined, a: 1}) // true
+equal([], []) // true
+equal([[[]]], [[[]]]) // true
+equal([[{ a: [] }]], [{ a: [] }]) // true
+equal(new Date("2000/1/1"), new Date("2000/1/1")) // true
+equal(new Date("2000/1/1"), new Date("2000/1/1 00:00:01")) // false
+equal(() => true, () => true) // true
+equal(() => true, () => false) // false
+equal(Error('hoge'), Error('hoge')) // true
+equal(Error('hoge'), Error('huga')) // false
+equal(TypeError('hoge'), TypeError('hoge')) // true
+equal(Error('hoge'), TypeError('hoge')) // false
+equal(/s/, /s/) // true
+equal(/s/, /t/) // false
+equal(/s/gi, /s/gi) // true
+equal(/s/gi, /s/gim) // false
+equal(new String('hello'), new String('hello')) // true
+equal(new Number(0), new Number(0)) // true
+equal(new Boolean(true), new Boolean(true)) // true
+equal(new Map([[1, 2], [3, 4]]), new Map([[3, 4], [1, 2]]) // true
+```
 
 ## :memo: API
 
@@ -88,6 +131,22 @@ equal(+0, 0) // true
 equal(-0, 0) // true
 equal(+0, -0) // true
 ```
+
+#### Built-in object
+
+The following objects work correctly.
+
+- `Array`
+- `Object` (JSONObject, `{}`)
+- `Date`
+- `Error`
+- `TypeError`
+- `RegExp`
+- `String`
+- `Number`
+- `Boolean`
+
+**Do not guarantee** the behavior of objects not on this list.
 
 ## :green_heart: Supports
 
