@@ -1,5 +1,5 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { and, AnyFn, entries, F, has, length, N, xor } from "./deps.ts";
+import { and, AnyFn, entries, F, has, ifElse, length, N, xor } from "./deps.ts";
 import {
   isBothArray,
   isBothDate,
@@ -90,7 +90,11 @@ const equalError = <T extends Error, U extends T>(a: T, b: U): boolean => {
     return true;
   }
 
-  return a.constructor.name === b.constructor.name;
+  return ifElse(equalConstructor(AggregateError, a, b), () =>
+    equalArray(
+      (a as Error as AggregateError).errors,
+      (b as Error as AggregateError).errors,
+    ), () => a.constructor.name === b.constructor.name);
 };
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>

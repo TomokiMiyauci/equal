@@ -115,6 +115,8 @@ Deno.test("equalConstructor", () => {
     [SyntaxError, TypeError(), RangeError(), false],
     [URIError, TypeError(), RangeError(), false],
     [URIError, URIError(), URIError(), true],
+    [AggregateError, AggregateError(""), AggregateError(""), true],
+    [AggregateError, AggregateError(""), Error(), false],
   ];
 
   table.forEach(([obj, a, b, expected]) => {
@@ -365,6 +367,54 @@ Deno.test("equalError", () => {
     [ReferenceError("xxx"), TypeError("xxx"), false],
     [SyntaxError("xxx"), TypeError("xxx"), false],
     [URIError("xxx"), TypeError("xxx"), false],
+    [AggregateError("xxx"), AggregateError("xxx"), true],
+    [AggregateError("xxx"), AggregateError("yyy"), false],
+    [AggregateError([Error("error")]), AggregateError([Error("error")]), true],
+    [AggregateError([Error("error")]), AggregateError([Error("xxxxx")]), false],
+    [
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      true,
+    ],
+    [
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      AggregateError([
+        Error("error"),
+        RangeError("Rerror"),
+        TypeError("Terror"),
+      ]),
+      false,
+    ],
+    [
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      true,
+    ],
+    [
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      AggregateError([
+        AggregateError([Error("xxxxx")]),
+      ]),
+      false,
+    ],
     [new CustomError("xxx"), new CustomError("xxx"), true],
     [new CustomError("yyy"), new CustomError("xxx"), false],
     [new CustomError("xxx"), Error("xxx"), false],
