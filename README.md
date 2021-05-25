@@ -100,6 +100,8 @@ equal(new Number(0), new Number(0)) // true
 equal(new Boolean(true), new Boolean(true)) // true
 equal(new Map([[1, 2], [3, 4]]), new Map([[3, 4], [1, 2]]) // true
 equal(new Map([[new Map(), { a: 1 } ]), new Map([[new Map(), { a: 1 } ]) // true
+equal(new Set(), new Set()) // true
+equal(new Set([[], {}, new Map(), new Set()]), new Set([[], {}, new Map(), new Set()])) // true
 ```
 
 ## :memo: API
@@ -134,20 +136,21 @@ equal(-0, 0) // true
 equal(+0, -0) // true
 ```
 
-#### Built-in object
+#### Built-in objects
 
 The following objects work correctly.
 
-- `Array`
-- `Object` (JSONObject, `{}`)
-- `Date`
-- `Error`
-- `TypeError`
-- `RegExp`
-- `Map`
-- `String`
-- `Number`
-- `Boolean`
+- [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+- [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+- [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError)
+- [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
+- [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#maps)
+- [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#sets)
+- [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+- [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
+- [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
 
 **Do not guarantee** the behavior of objects not on this list.
 
