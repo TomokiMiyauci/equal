@@ -1,7 +1,7 @@
 {
   "name": "lauqe",
   "description": "(=equal) Deep comparison between two values to determine if they are equivalent",
-  "version": "1.1.0",
+  "version": "1.2.0-beta.3",
   "main": "dist/index.umd.js",
   "module": "dist/index.es.js",
   "types": "dist/index.es.d.ts",

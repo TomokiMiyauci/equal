@@ -30,6 +30,7 @@ const isBothDate = instanceofFactory(Date);
 const isBothRegExp = instanceofFactory(RegExp);
 const isBothError = instanceofFactory(Error);
 const isBothMap = instanceofFactory(Map);
+const isBothSet = instanceofFactory(Set);
 
 export {
   isBothArray,
@@ -42,4 +43,5 @@ export {
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
+  isBothSet,
 };

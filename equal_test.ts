@@ -3,6 +3,7 @@ import { assertEquals, isSymbol } from "./dev_deps.ts";
 import {
   equal,
   equalArray,
+  equalConstructor,
   equalDate,
   equalError,
   equalFunction,
@@ -12,6 +13,7 @@ import {
   equalMap,
   equalObjectExcludeJson,
   equalRegExp,
+  equalSet,
 } from "./equal.ts";
 
 Deno.test("equalJsonObject", () => {
@@ -94,6 +96,34 @@ Deno.test("equalObjectExcludeJson", () => {
       equalObjectExcludeJson(a, b),
       expected,
       `equalObjectExcludeJson(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalConstructor", () => {
+  const table: [
+    Function,
+    unknown,
+    unknown,
+    boolean,
+  ][] = [
+    [Error, Error(), Error(), true],
+    [Error, TypeError(), TypeError(), true],
+    [TypeError, TypeError(), TypeError(), true],
+    [TypeError, TypeError(), RangeError(), false],
+    [RangeError, TypeError(), RangeError(), false],
+    [SyntaxError, TypeError(), RangeError(), false],
+    [URIError, TypeError(), RangeError(), false],
+    [URIError, URIError(), URIError(), true],
+    [AggregateError, AggregateError(""), AggregateError(""), true],
+    [AggregateError, AggregateError(""), Error(), false],
+  ];
+
+  table.forEach(([obj, a, b, expected]) => {
+    assertEquals(
+      equalConstructor(obj, a, b),
+      expected,
+      `equalConstructor(${obj}, ${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -242,13 +272,154 @@ Deno.test("equalRegExp", () => {
   });
 });
 
+Deno.test("equalSet", () => {
+  const symbol = Symbol("hello");
+  const table: [Set<unknown>, Set<unknown>, boolean][] = [
+    [new Set(), new Set(), true],
+    [new Set([]), new Set([]), true],
+    [new Set([1]), new Set([1]), true],
+    [new Set([1, 2]), new Set([1]), false],
+    [new Set([1]), new Set([1, 2]), false],
+    [new Set([1, 2, 3]), new Set([1, 2, 3]), true],
+    [new Set([1, 1, 1]), new Set([1, 1, 1]), true],
+    [new Set([1, 3, 2]), new Set([1, 2, 3]), false],
+    [
+      new Set([null, undefined, 0, "", 1n, true]),
+      new Set([null, undefined, 0, "", 1n, true]),
+      true,
+    ],
+    [
+      new Set([symbol]),
+      new Set([symbol]),
+      true,
+    ],
+    [
+      new Set([symbol]),
+      new Set([Symbol("hello")]),
+      false,
+    ],
+    [
+      new Set([[], {}]),
+      new Set([[], {}]),
+      true,
+    ],
+    [
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      true,
+    ],
+    [
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("f"), () => true]),
+      false,
+    ],
+    [
+      new Set([
+        [1, [], { a: "hello" }],
+        { b: null, c: {} },
+      ]),
+      new Set([
+        [1, [], { a: "hello" }],
+        { b: null, c: {} },
+      ]),
+      true,
+    ],
+    [
+      new Set([new Map([[new Set(), new Map()]])]),
+      new Set([new Map([[new Set(), new Map()]])]),
+      true,
+    ],
+    [
+      new Set([{}]),
+      new Set([{}]),
+      true,
+    ],
+    [
+      new Set([{}, {}]),
+      new Set([{}]),
+      false,
+    ],
+    [
+      new Set([new Map(), new Set()]),
+      new Set([new Map(), new Set()]),
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalSet(a, b),
+      expected,
+      `equalSet() -> ${expected}`,
+    );
+  });
+});
+
 Deno.test("equalError", () => {
+  class CustomError extends Error {}
+
   const table: [Error, Error, boolean][] = [
     [Error("hoge"), Error("hoge"), true],
     [Error("hoge"), Error("hogehoge"), false],
-    [Error("xxx"), new TypeError("xxx"), false],
-    [TypeError("xxx"), new TypeError("xxx"), true],
+    [Error("xxx"), TypeError("xxx"), false],
+    [TypeError("xxx"), TypeError("xxx"), true],
+    [EvalError("xxx"), TypeError("xxx"), false],
+    [RangeError("xxx"), TypeError("xxx"), false],
+    [ReferenceError("xxx"), TypeError("xxx"), false],
+    [SyntaxError("xxx"), TypeError("xxx"), false],
+    [URIError("xxx"), TypeError("xxx"), false],
+    [AggregateError("xxx"), AggregateError("xxx"), true],
+    [AggregateError("xxx"), AggregateError("yyy"), false],
+    [AggregateError([Error("error")]), AggregateError([Error("error")]), true],
+    [AggregateError([Error("error")]), AggregateError([Error("xxxxx")]), false],
+    [
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      true,
+    ],
+    [
+      AggregateError([
+        Error("error"),
+        TypeError("Terror"),
+        RangeError("Rerror"),
+      ]),
+      AggregateError([
+        Error("error"),
+        RangeError("Rerror"),
+        TypeError("Terror"),
+      ]),
+      false,
+    ],
+    [
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      true,
+    ],
+    [
+      AggregateError([
+        AggregateError([Error("error")]),
+      ]),
+      AggregateError([
+        AggregateError([Error("xxxxx")]),
+      ]),
+      false,
+    ],
+    [new CustomError("xxx"), new CustomError("xxx"), true],
+    [new CustomError("yyy"), new CustomError("xxx"), false],
+    [new CustomError("xxx"), Error("xxx"), false],
   ];
+
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalError(a, b),
@@ -656,8 +827,8 @@ Deno.test("equal", () => {
       new Map().set(new Map(), new Map()),
       true,
     ],
-    [new Set(), new Set(), false],
-    [new Set(), new Set([]), false],
+    [new Set(), new Set(), true],
+    [new Set(), new Set([]), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(

@@ -32,7 +32,7 @@ Deep comparison between two values to determine if they are equivalent
 
 ---
 
-## Table of Contents
+## :bookmark: Table of Contents
 
 - [Features](#sparkles-features)
 - [Example](#zap-example)
@@ -91,6 +91,9 @@ equal(Error('hoge'), Error('hoge')) // true
 equal(Error('hoge'), Error('huga')) // false
 equal(TypeError('hoge'), TypeError('hoge')) // true
 equal(Error('hoge'), TypeError('hoge')) // false
+equal(RangeError('error'), ReferenceError('error')) // false
+equal(SyntaxError('error'), URIError('error')) // false
+equal(AggregateError([ Error("error"), TypeError("type error") ]), AggregateError([ Error("error"), TypeError("type error") ])) // true
 equal(/s/, /s/) // true
 equal(/s/, /t/) // false
 equal(/s/gi, /s/gi) // true
@@ -100,6 +103,8 @@ equal(new Number(0), new Number(0)) // true
 equal(new Boolean(true), new Boolean(true)) // true
 equal(new Map([[1, 2], [3, 4]]), new Map([[3, 4], [1, 2]]) // true
 equal(new Map([[new Map(), { a: 1 } ]), new Map([[new Map(), { a: 1 } ]) // true
+equal(new Set(), new Set()) // true
+equal(new Set([[], {}, new Map(), new Set()]), new Set([[], {}, new Map(), new Set()])) // true
 ```
 
 ## :memo: API
@@ -134,20 +139,20 @@ equal(-0, 0) // true
 equal(+0, -0) // true
 ```
 
-#### Built-in object
+#### Built-in objects
 
 The following objects work correctly.
 
-- `Array`
-- `Object` (JSONObject, `{}`)
-- `Date`
-- `Error`
-- `TypeError`
-- `RegExp`
-- `Map`
-- `String`
-- `Number`
-- `Boolean`
+- [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
+- [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
+- [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
+- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) ( [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError), [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError), [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError), [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError), [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError), [`URIError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError), [`AggregateError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError) )
+- [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
+- [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#maps)
+- [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#sets)
+- [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
+- [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
+- [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
 
 **Do not guarantee** the behavior of objects not on this list.
 
