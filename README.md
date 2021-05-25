@@ -32,7 +32,7 @@ Deep comparison between two values to determine if they are equivalent
 
 ---
 
-## Table of Contents
+## :bookmark: Table of Contents
 
 - [Features](#sparkles-features)
 - [Example](#zap-example)
@@ -91,6 +91,8 @@ equal(Error('hoge'), Error('hoge')) // true
 equal(Error('hoge'), Error('huga')) // false
 equal(TypeError('hoge'), TypeError('hoge')) // true
 equal(Error('hoge'), TypeError('hoge')) // false
+equal(RangeError('error'), ReferenceError('error')) // false
+equal(SyntaxError('error'), URIError('error')) // false
 equal(/s/, /s/) // true
 equal(/s/, /t/) // false
 equal(/s/gi, /s/gi) // true
@@ -143,8 +145,7 @@ The following objects work correctly.
 - [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
 - [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
 - [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
-- [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError)
+- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) ( [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError), [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError), [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError), [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError), [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError), [URIError](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError) )
 - [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
 - [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#maps)
 - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#sets)
