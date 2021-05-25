@@ -1,3 +1,8 @@
+# [v1.2.0-beta.3](https://github.com/TomokiMiyauci/equal/compare/v1.2.0-beta.2...v1.2.0-beta.3) (2021-05-25)
+
+## ✨ New Features
+- [`db6f997`](https://github.com/TomokiMiyauci/equal/commit/db6f997)   Add equality of AggregateError (Issues: [`#9`](https://github.com/TomokiMiyauci/equal/issues/9))
+
 # [v1.2.0-beta.2](https://github.com/TomokiMiyauci/equal/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2021-05-25)
 
 ## ✨ New Features
