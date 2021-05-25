@@ -11,6 +11,7 @@ import {
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
+  isBothSet,
 } from "./is.ts";
 import { entriesSymbol, instanceOf } from "./utils.ts";
 import { is } from "./constants.ts";
@@ -49,6 +50,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothRegExp, equalRegExp],
     [isBothError, equalError],
     [isBothMap, equalMap],
+    [isBothSet, equalSet],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
   ];
 
@@ -80,6 +82,11 @@ const equalMap = <T extends Map<any, any>, U extends T>(
 
   return equalKeyValueTupleNoOrder([...a], [...b]);
 };
+
+const equalSet = <T extends Set<unknown>, U extends T>(
+  a: T,
+  b: U,
+): boolean => equalArray([...a], [...b]);
 
 const equalKeyValueTuple = <T extends [unknown, unknown], U extends T>(
   [keyA, valueA]: T,
@@ -150,4 +157,5 @@ export {
   equalMap,
   equalObjectExcludeJson,
   equalRegExp,
+  equalSet,
 };

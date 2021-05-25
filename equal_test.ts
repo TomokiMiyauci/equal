@@ -12,6 +12,7 @@ import {
   equalMap,
   equalObjectExcludeJson,
   equalRegExp,
+  equalSet,
 } from "./equal.ts";
 
 Deno.test("equalJsonObject", () => {
@@ -238,6 +239,88 @@ Deno.test("equalRegExp", () => {
       equalRegExp(a, b),
       expected,
       `equalRegExp(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalSet", () => {
+  const symbol = Symbol("hello");
+  const table: [Set<unknown>, Set<unknown>, boolean][] = [
+    [new Set(), new Set(), true],
+    [new Set([]), new Set([]), true],
+    [new Set([1]), new Set([1]), true],
+    [new Set([1, 2]), new Set([1]), false],
+    [new Set([1]), new Set([1, 2]), false],
+    [new Set([1, 2, 3]), new Set([1, 2, 3]), true],
+    [new Set([1, 1, 1]), new Set([1, 1, 1]), true],
+    [new Set([1, 3, 2]), new Set([1, 2, 3]), false],
+    [
+      new Set([null, undefined, 0, "", 1n, true]),
+      new Set([null, undefined, 0, "", 1n, true]),
+      true,
+    ],
+    [
+      new Set([symbol]),
+      new Set([symbol]),
+      true,
+    ],
+    [
+      new Set([symbol]),
+      new Set([Symbol("hello")]),
+      false,
+    ],
+    [
+      new Set([[], {}]),
+      new Set([[], {}]),
+      true,
+    ],
+    [
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      true,
+    ],
+    [
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("e"), () => true]),
+      new Set([[], {}, new Date(0), /s/, new Map(), Error("f"), () => true]),
+      false,
+    ],
+    [
+      new Set([
+        [1, [], { a: "hello" }],
+        { b: null, c: {} },
+      ]),
+      new Set([
+        [1, [], { a: "hello" }],
+        { b: null, c: {} },
+      ]),
+      true,
+    ],
+    [
+      new Set([new Map([[new Set(), new Map()]])]),
+      new Set([new Map([[new Set(), new Map()]])]),
+      true,
+    ],
+    [
+      new Set([{}]),
+      new Set([{}]),
+      true,
+    ],
+    [
+      new Set([{}, {}]),
+      new Set([{}]),
+      false,
+    ],
+    [
+      new Set([new Map(), new Set()]),
+      new Set([new Map(), new Set()]),
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalSet(a, b),
+      expected,
+      `equalSet() -> ${expected}`,
     );
   });
 });
@@ -656,8 +739,8 @@ Deno.test("equal", () => {
       new Map().set(new Map(), new Map()),
       true,
     ],
-    [new Set(), new Set(), false],
-    [new Set(), new Set([]), false],
+    [new Set(), new Set(), true],
+    [new Set(), new Set([]), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
