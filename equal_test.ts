@@ -3,6 +3,7 @@ import { assertEquals, isSymbol } from "./dev_deps.ts";
 import {
   equal,
   equalArray,
+  equalConstructor,
   equalDate,
   equalError,
   equalFunction,
@@ -95,6 +96,32 @@ Deno.test("equalObjectExcludeJson", () => {
       equalObjectExcludeJson(a, b),
       expected,
       `equalObjectExcludeJson(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalConstructor", () => {
+  const table: [
+    Function,
+    unknown,
+    unknown,
+    boolean,
+  ][] = [
+    [Error, Error(), Error(), true],
+    [Error, TypeError(), TypeError(), true],
+    [TypeError, TypeError(), TypeError(), true],
+    [TypeError, TypeError(), RangeError(), false],
+    [RangeError, TypeError(), RangeError(), false],
+    [SyntaxError, TypeError(), RangeError(), false],
+    [URIError, TypeError(), RangeError(), false],
+    [URIError, URIError(), URIError(), true],
+  ];
+
+  table.forEach(([obj, a, b, expected]) => {
+    assertEquals(
+      equalConstructor(obj, a, b),
+      expected,
+      `equalConstructor(${obj}, ${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -326,12 +353,23 @@ Deno.test("equalSet", () => {
 });
 
 Deno.test("equalError", () => {
+  class CustomError extends Error {}
+
   const table: [Error, Error, boolean][] = [
     [Error("hoge"), Error("hoge"), true],
     [Error("hoge"), Error("hogehoge"), false],
-    [Error("xxx"), new TypeError("xxx"), false],
-    [TypeError("xxx"), new TypeError("xxx"), true],
+    [Error("xxx"), TypeError("xxx"), false],
+    [TypeError("xxx"), TypeError("xxx"), true],
+    [EvalError("xxx"), TypeError("xxx"), false],
+    [RangeError("xxx"), TypeError("xxx"), false],
+    [ReferenceError("xxx"), TypeError("xxx"), false],
+    [SyntaxError("xxx"), TypeError("xxx"), false],
+    [URIError("xxx"), TypeError("xxx"), false],
+    [new CustomError("xxx"), new CustomError("xxx"), true],
+    [new CustomError("yyy"), new CustomError("xxx"), false],
+    [new CustomError("xxx"), Error("xxx"), false],
   ];
+
   table.forEach(([a, b, expected]) => {
     assertEquals(
       equalError(a, b),

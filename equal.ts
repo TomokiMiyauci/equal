@@ -62,14 +62,36 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   return false;
 };
 
+const equalConstructor = <T, U extends T>(
+  obj: Function,
+  a: T,
+  b: U,
+): boolean => and(instanceOf(obj, a), () => instanceOf(obj, b));
+
 const equalRegExp = <T extends RegExp, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 
 const equalDate = <T extends Date, U extends T>(a: T, b: U): boolean =>
   a.getTime() === b.getTime();
 
-const equalError = <T extends Error, U extends T>(a: T, b: U): boolean =>
-  and(a.message === b.message, () => a.toString() === b.toString());
+const equalError = <T extends Error, U extends T>(a: T, b: U): boolean => {
+  if (a.message !== b.message) return false;
+  const errorConstructors = [
+    EvalError,
+    RangeError,
+    ReferenceError,
+    SyntaxError,
+    TypeError,
+    URIError,
+  ];
+  if (
+    errorConstructors.some((constructor) => equalConstructor(constructor, a, b))
+  ) {
+    return true;
+  }
+
+  return a.constructor.name === b.constructor.name;
+};
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
@@ -126,9 +148,7 @@ const equalObjectExcludeJson = <
   b: U,
 ): boolean => {
   if (
-    [Number, String, Boolean].some((obj) =>
-      and(instanceOf(obj, a), () => instanceOf(obj, b))
-    )
+    [Number, String, Boolean].some((obj) => equalConstructor(obj, a, b))
   ) {
     return equal(a.valueOf(), b.valueOf());
   }
@@ -148,6 +168,7 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
 export {
   equal,
   equalArray,
+  equalConstructor,
   equalDate,
   equalError,
   equalFunction,
