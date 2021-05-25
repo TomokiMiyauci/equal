@@ -1,3 +1,8 @@
+# [v1.2.0-beta.2](https://github.com/TomokiMiyauci/equal/compare/v1.2.0-beta.1...v1.2.0-beta.2) (2021-05-25)
+
+## ✨ New Features
+- [`6f6a490`](https://github.com/TomokiMiyauci/equal/commit/6f6a490)   Add feature of equality all built-in Errors (Issues: [`#9`](https://github.com/TomokiMiyauci/equal/issues/9))
+
 # [v1.2.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.1.0...v1.2.0-beta.1) (2021-05-25)
 
 ## ✨ New Features
