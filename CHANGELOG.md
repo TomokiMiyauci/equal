@@ -1,3 +1,8 @@
+# [v1.3.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.2.0...v1.3.0-beta.1) (2021-05-30)
+
+## ✨ New Features
+- [`90c2572`](https://github.com/TomokiMiyauci/equal/commit/90c2572)   No bundle external dependency for bundle size, change outputs
+
 # [v1.2.0](https://github.com/TomokiMiyauci/equal/compare/v1.1.0...v1.2.0) (2021-05-25)
 
 ## ✨ New Features
