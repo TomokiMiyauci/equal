@@ -4,7 +4,7 @@
 </p>
 
 <p align="center">
-Deep comparison between two values to determine if they are equivalent
+TypeScript-first deep equivalence comparison between two values
 </p>
 
 <div align="center">
@@ -31,6 +31,10 @@ Deep comparison between two values to determine if they are equivalent
 </div>
 
 ---
+
+Equivalent comparison of Object data structures. It supports many built-in objects and can be compared with `Date`, `Array` or `Object`.
+
+The supported built-in objects are [here](#built-in-objects)
 
 ## :bookmark: Table of Contents
 
@@ -158,27 +162,27 @@ The following objects work correctly.
 
 ## :green_heart: Supports
 
+> ie is no longer supported to reduce bundle size.
+
 The TypeScript version must be `4.1.0` or higher.
 
-This project provide `ES modules` and `UMD`. The range supported by both is different.
+This project provides `ES modules` and `Commonjs`.
 
-### ES modules
+If you have an opinion about what to support, you can open an [issue](https://github.com/TomokiMiyauci/equal/issues) to discuss it.
 
-Limit support to the latest environment to reduce the bundle size.
+The `browserslist` has the following settings.
+
+```text
+defaults
+last 8 version
+not IE <= 11
+not ie_mob <= 11
+node 6
+```
 
 | <img width="30px" height="30px" alt="Deno" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/deno.svg"></br>Deno | <img width="24px" height="24px" alt="Node.js" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
 | - | -- | - | -- | - | - | - | -- | -- |
-| ^1.6.0 | ^14.16.0 | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions | last 2 versions |
-
-### UMD
-
-Browser is supporting since IE11.
-
-| <img width="24px" height="24px" alt="Node.js" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>IE / Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
-| - | - | - | - | - | - | - | - |
-| ^6.17.0 | IE11 / ^16 | ^60 | ^61 | ^10.1 | ^10.3 | ^8.2 | ^48 |
-
-Compared to `ES modules`, `UMD` has a bundle size increase of about 2.5x. Recommend using `ES modules` as much as possible.
+| `^1.6.0` | `^6.17.0` | `^83` | `^78` | `^83` | `^11` | `^12.0` | `^7.2` | `^68` |
 
 ## :dizzy: Usage
 
@@ -186,7 +190,7 @@ Compared to `ES modules`, `UMD` has a bundle size increase of about 2.5x. Recomm
 
 ### 🦕 Deno
 
-#### deno.land
+#### [deno.land](https://deno.land/x/equal)
 
 ```ts
 import { equal } from "https://deno.land/x/equal/mod.ts";
@@ -194,7 +198,7 @@ import { equal } from "https://deno.land/x/equal/mod.ts";
 equal([1, 2, 3], [1, 2, 3]); // true
 ```
 
-#### nest.land
+#### [nest.land](https://nest.land/package/equal)
 
 ```ts
 import { equal } from "https://x.nest.land/equal/mod.ts";
@@ -204,7 +208,7 @@ equal([1, ['hello', ['world']], [1, ['hello', ['world']]); // true
 
 ### :package: Node.js
 
-> NPM package name is `lauqe` .
+> NPM package name is [`lauqe`](https://www.npmjs.com/package/lauqe) .
 
 #### Install
 
@@ -222,7 +226,7 @@ import { equal } from "lauqe";
 equal(new Date('2000/1/1'), new Date('2000/1/1')); // true
 ```
 
-#### UMD
+#### Commonjs
 
 ```ts
 const { equal } = require("lauqe");
@@ -232,24 +236,12 @@ equal(/hello/g, /hello/g); // true
 
 ### :globe_with_meridians: Browser
 
-#### ES modules
+The module that bundles the dependencies is obtained from [skypack](https://www.skypack.dev/).
 
 ```html
 <script type="module">
   import { equal } from "https://unpkg.com/lauqe?module";
   console.log(equal(() => {}, () => {}); // true
-</script>
-```
-
-#### UMD
-
-> The global object is `E`.
-
-```html
-<script src="https://unpkg.com/lauqe"></script>
-
-<script>
-  console.log(E.equal(NaN, NaN)); // true
 </script>
 ```
 
