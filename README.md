@@ -15,7 +15,7 @@ TypeScript-first deep equivalence comparison between two values
 [![nest badge](https://nest.land/badge.svg)](https://nest.land/package/equal)
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/equal/mod.ts)
 [![deno version](https://img.shields.io/badge/deno-^1.6.0-lightgrey?logo=deno)](https://github.com/denoland/deno)
-![node support version](https://img.shields.io/badge/node-%5E14.16.0-yellow)
+![node support version](https://img.shields.io/badge/node-%5E6.17.0-yellow)
 ![bundle size](https://img.shields.io/bundlephobia/min/lauqe)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
 
