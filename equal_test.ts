@@ -16,6 +16,7 @@ import {
   equalRegExp,
   equalSet,
   equalUint8Array,
+  equalUint8ClampedArray,
   equalURL,
   equalURLSearchParams,
 } from "./equal.ts";
@@ -306,6 +307,48 @@ Deno.test("equalUint8Array", () => {
       equalUint8Array(a, b),
       expected,
       `equalUint8Array(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalUint8ClampedArray", () => {
+  const table: [Uint8ClampedArray, Uint8ClampedArray, boolean][] = [
+    [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
+    [new Uint8ClampedArray([]), new Uint8ClampedArray(), true],
+    [new Uint8ClampedArray(), new Uint8ClampedArray([]), true],
+    [new Uint8ClampedArray([]), new Uint8ClampedArray([]), true],
+    [new Uint8ClampedArray(0), new Uint8ClampedArray(0), true],
+    [new Uint8ClampedArray(0), new Uint8ClampedArray(), true],
+    [new Uint8ClampedArray(), new Uint8ClampedArray(0), true],
+    [new Uint8ClampedArray(0), new Uint8ClampedArray(1), false],
+    [new Uint8ClampedArray(1), new Uint8ClampedArray(1), true],
+    [new Uint8ClampedArray([1, 2, 3]), new Uint8ClampedArray([1, 2, 3]), true],
+    [
+      new Uint8ClampedArray([255, -128, 0]),
+      new Uint8ClampedArray([255, -128, 0]),
+      true,
+    ],
+    [
+      new Uint8ClampedArray([256]),
+      new Uint8ClampedArray([255]),
+      true,
+    ],
+    [
+      new Uint8ClampedArray([255, -128, 0]),
+      new Uint8ClampedArray([127, -128, 1]),
+      false,
+    ],
+    [
+      new Uint8ClampedArray([255, 0]),
+      new Uint8ClampedArray([255, 0, 0]),
+      false,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalUint8ClampedArray(a, b),
+      expected,
+      `equalUint8ClampedArray(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -1012,6 +1055,7 @@ Deno.test("equal", () => {
     ],
     [new Int8Array(), new Int8Array(), true],
     [new Uint8Array(), new Uint8Array(), true],
+    [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
     [new Uint16Array(), new Uint16Array(), false],
   ];
   table.forEach(([a, b, expected]) => {

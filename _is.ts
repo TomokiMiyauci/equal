@@ -35,6 +35,7 @@ const isBothURL = instanceofFactory(URL);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
 const isBothInt8Array = instanceofFactory(Int8Array);
 const isBothUint8Array = instanceofFactory(Uint8Array);
+const isBothUint8ClampedArray = instanceofFactory(Uint8ClampedArray);
 
 export {
   isBothArray,
@@ -50,6 +51,7 @@ export {
   isBothRegExp,
   isBothSet,
   isBothUint8Array,
+  isBothUint8ClampedArray,
   isBothURL,
   isBothURLSearchParams,
 };

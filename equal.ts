@@ -14,6 +14,7 @@ import {
   isBothRegExp,
   isBothSet,
   isBothUint8Array,
+  isBothUint8ClampedArray,
   isBothURL,
   isBothURLSearchParams,
 } from "./_is.ts";
@@ -57,6 +58,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothSet, equalSet],
     [isBothInt8Array, equalInt8Array],
     [isBothUint8Array, equalUint8Array],
+    [isBothUint8ClampedArray, equalUint8ClampedArray],
     [isBothURL, equalURL],
     [isBothURLSearchParams, equalURLSearchParams],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
@@ -194,6 +196,11 @@ const equalUint8Array = <T extends Uint8Array, U extends T>(
   b: U,
 ): boolean => equalArray([...a], [...b]);
 
+const equalUint8ClampedArray = <T extends Uint8ClampedArray, U extends T>(
+  a: T,
+  b: U,
+): boolean => equalArray([...a], [...b]);
+
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
@@ -217,6 +224,7 @@ export {
   equalRegExp,
   equalSet,
   equalUint8Array,
+  equalUint8ClampedArray,
   equalURL,
   equalURLSearchParams,
 };
