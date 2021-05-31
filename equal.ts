@@ -12,9 +12,9 @@ import {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
-} from "./is.ts";
-import { entriesSymbol, instanceOf } from "./utils.ts";
-import { is } from "./constants.ts";
+} from "./_is.ts";
+import { entriesSymbol, instanceOf } from "./_utils.ts";
+import { is } from "./_constants.ts";
 type Verdict = [
   AnyFn<unknown, readonly [boolean, boolean]>,
   AnyFn<any, boolean>,
