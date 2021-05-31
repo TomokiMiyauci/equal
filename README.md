@@ -248,7 +248,7 @@ The module that bundles the dependencies is obtained from [skypack](https://www.
 
 ```html
 <script type="module">
-  import { equal } from "https://unpkg.com/lauqe?module";
+  import { equal } from "https://cdn.skypack.dev/lauqe";
   console.log(equal(() => {}, () => {}); // true
 </script>
 ```
