@@ -1,3 +1,8 @@
+# [v1.4.0-beta.2](https://github.com/TomokiMiyauci/equal/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2021-05-31)
+
+## ✨ New Features
+- [`dfb37b4`](https://github.com/TomokiMiyauci/equal/commit/dfb37b4)   Add equality of ArrayBuffer (Issues: [`#20`](https://github.com/TomokiMiyauci/equal/issues/20))
+
 # [v1.4.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.3.0...v1.4.0-beta.1) (2021-05-31)
 
 ## ✨ New Features
