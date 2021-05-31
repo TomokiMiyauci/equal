@@ -180,11 +180,6 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   return a.every((val, index) => equal(val, b[index]));
 };
 
-const equaltoString = <T extends Object>(
-  a: T,
-  b: T,
-): boolean => a.toString() === b.toString();
-
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
@@ -206,7 +201,6 @@ export {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
-  equaltoString,
   equalURL,
   equalURLSearchParams,
 };
