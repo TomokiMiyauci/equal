@@ -5,7 +5,6 @@ import {
   isBothDate,
   isBothError,
   isBothFunction,
-  isBothInt8Array,
   isBothJSONObject,
   isBothMap,
   isBothNumber,
@@ -13,8 +12,7 @@ import {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
-  isBothUint8Array,
-  isBothUint8ClampedArray,
+  isBothTypedArray,
   isBothURL,
   isBothURLSearchParams,
 } from "./_is.ts";
@@ -56,9 +54,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothError, equalError],
     [isBothMap, equalMap],
     [isBothSet, equalSet],
-    [isBothInt8Array, equalInt8Array],
-    [isBothUint8Array, equalUint8Array],
-    [isBothUint8ClampedArray, equalUint8ClampedArray],
+    [isBothTypedArray, equalTypedArray],
     [isBothURL, equalURL],
     [isBothURLSearchParams, equalURLSearchParams],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
@@ -191,14 +187,22 @@ const equalInt8Array = <T extends Int8Array, U extends T>(
   b: U,
 ): boolean => equalArray([...a], [...b]);
 
-const equalUint8Array = <T extends Uint8Array, U extends T>(
+const equalTypedArray = <
+  T extends
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
+    | Int16Array
+    | Uint16Array
+    | Int32Array
+    | Uint32Array
+    | Float32Array
+    | Float64Array
+    | BigInt64Array
+    | BigUint64Array,
+>(
   a: T,
-  b: U,
-): boolean => equalArray([...a], [...b]);
-
-const equalUint8ClampedArray = <T extends Uint8ClampedArray, U extends T>(
-  a: T,
-  b: U,
+  b: T,
 ): boolean => equalArray([...a], [...b]);
 
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
@@ -223,8 +227,7 @@ export {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
-  equalUint8Array,
-  equalUint8ClampedArray,
+  equalTypedArray,
   equalURL,
   equalURLSearchParams,
 };

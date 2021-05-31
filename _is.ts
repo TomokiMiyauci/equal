@@ -1,6 +1,7 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import {
   and,
+  ifElse,
   isArray,
   isFunction,
   isJSONObject,
@@ -33,16 +34,33 @@ const isBothMap = instanceofFactory(Map);
 const isBothSet = instanceofFactory(Set);
 const isBothURL = instanceofFactory(URL);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
-const isBothInt8Array = instanceofFactory(Int8Array);
-const isBothUint8Array = instanceofFactory(Uint8Array);
-const isBothUint8ClampedArray = instanceofFactory(Uint8ClampedArray);
+const isBothTypedArray = <T, U extends T>(a: T, b: U): [boolean, boolean] => {
+  const result = [
+    Int8Array,
+    Uint8Array,
+    Uint8ClampedArray,
+    Int16Array,
+    Uint16Array,
+    Int32Array,
+    Uint32Array,
+    Float32Array,
+    Float64Array,
+    BigInt64Array,
+    BigUint64Array,
+  ]
+    .some((obj) => {
+      const [f1, f2] = instanceofFactory(obj)(a, b);
+      return and(f1, f2);
+    });
+
+  return ifElse(result, [true, true], [false, false]);
+};
 
 export {
   isBothArray,
   isBothDate,
   isBothError,
   isBothFunction,
-  isBothInt8Array,
   isBothJSONObject,
   isBothMap,
   isBothNumber,
@@ -50,8 +68,7 @@ export {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
-  isBothUint8Array,
-  isBothUint8ClampedArray,
+  isBothTypedArray,
   isBothURL,
   isBothURLSearchParams,
 };

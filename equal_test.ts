@@ -7,7 +7,6 @@ import {
   equalDate,
   equalError,
   equalFunction,
-  equalInt8Array,
   equalJsonObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,
@@ -15,8 +14,7 @@ import {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
-  equalUint8Array,
-  equalUint8ClampedArray,
+  equalTypedArray,
   equalURL,
   equalURLSearchParams,
 } from "./equal.ts";
@@ -261,94 +259,48 @@ Deno.test("equalArray", () => {
   });
 });
 
-Deno.test("equalInt8Array", () => {
-  const table: [Int8Array, Int8Array, boolean][] = [
+Deno.test("equalTypedArray", () => {
+  type ArrayLike =
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
+    | Int16Array
+    | Uint16Array
+    | Int32Array
+    | Uint32Array
+    | Float32Array
+    | Float64Array
+    | BigInt64Array
+    | BigUint64Array;
+  const table: [ArrayLike, ArrayLike, boolean][] = [
     [new Int8Array(), new Int8Array(), true],
-    [new Int8Array([]), new Int8Array(), true],
-    [new Int8Array(), new Int8Array([]), true],
-    [new Int8Array([]), new Int8Array([]), true],
-    [new Int8Array(0), new Int8Array(0), true],
-    [new Int8Array(0), new Int8Array(), true],
-    [new Int8Array(), new Int8Array(0), true],
-    [new Int8Array(0), new Int8Array(1), false],
-    [new Int8Array(1), new Int8Array(1), true],
-    [new Int8Array([1, 2, 3]), new Int8Array([1, 2, 3]), true],
-    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 0]), true],
-    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 1]), false],
-    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 0, 1]), false],
-  ];
-  table.forEach(([a, b, expected]) => {
-    assertEquals(
-      equalInt8Array(a, b),
-      expected,
-      `equalInt8Array(${a}, ${b}) -> ${expected}`,
-    );
-  });
-});
-
-Deno.test("equalUint8Array", () => {
-  const table: [Uint8Array, Uint8Array, boolean][] = [
+    [new Int8Array([21, 31]), new Int8Array([21, 31]), true],
     [new Uint8Array(), new Uint8Array(), true],
-    [new Uint8Array([]), new Uint8Array(), true],
-    [new Uint8Array(), new Uint8Array([]), true],
-    [new Uint8Array([]), new Uint8Array([]), true],
-    [new Uint8Array(0), new Uint8Array(0), true],
-    [new Uint8Array(0), new Uint8Array(), true],
-    [new Uint8Array(), new Uint8Array(0), true],
-    [new Uint8Array(0), new Uint8Array(1), false],
-    [new Uint8Array(1), new Uint8Array(1), true],
-    [new Uint8Array([1, 2, 3]), new Uint8Array([1, 2, 3]), true],
-    [new Uint8Array([255, -128, 0]), new Uint8Array([255, -128, 0]), true],
-    [new Uint8Array([255, -128, 0]), new Uint8Array([127, -128, 1]), false],
-    [new Uint8Array([255, 0]), new Uint8Array([255, 0, 0]), false],
-  ];
-  table.forEach(([a, b, expected]) => {
-    assertEquals(
-      equalUint8Array(a, b),
-      expected,
-      `equalUint8Array(${a}, ${b}) -> ${expected}`,
-    );
-  });
-});
-
-Deno.test("equalUint8ClampedArray", () => {
-  const table: [Uint8ClampedArray, Uint8ClampedArray, boolean][] = [
+    [new Uint8Array([21, 31]), new Uint8Array([21, 31]), true],
     [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
-    [new Uint8ClampedArray([]), new Uint8ClampedArray(), true],
-    [new Uint8ClampedArray(), new Uint8ClampedArray([]), true],
-    [new Uint8ClampedArray([]), new Uint8ClampedArray([]), true],
-    [new Uint8ClampedArray(0), new Uint8ClampedArray(0), true],
-    [new Uint8ClampedArray(0), new Uint8ClampedArray(), true],
-    [new Uint8ClampedArray(), new Uint8ClampedArray(0), true],
-    [new Uint8ClampedArray(0), new Uint8ClampedArray(1), false],
-    [new Uint8ClampedArray(1), new Uint8ClampedArray(1), true],
-    [new Uint8ClampedArray([1, 2, 3]), new Uint8ClampedArray([1, 2, 3]), true],
-    [
-      new Uint8ClampedArray([255, -128, 0]),
-      new Uint8ClampedArray([255, -128, 0]),
-      true,
-    ],
-    [
-      new Uint8ClampedArray([256]),
-      new Uint8ClampedArray([255]),
-      true,
-    ],
-    [
-      new Uint8ClampedArray([255, -128, 0]),
-      new Uint8ClampedArray([127, -128, 1]),
-      false,
-    ],
-    [
-      new Uint8ClampedArray([255, 0]),
-      new Uint8ClampedArray([255, 0, 0]),
-      false,
-    ],
+    [new Uint8ClampedArray([21, 31]), new Uint8ClampedArray([21, 31]), true],
+    [new Int16Array(), new Int16Array(), true],
+    [new Int16Array([21, 31]), new Int16Array([21, 31]), true],
+    [new Uint16Array(), new Uint16Array(), true],
+    [new Uint16Array([21, 31]), new Uint16Array([21, 31]), true],
+    [new Int32Array(), new Int32Array(), true],
+    [new Int32Array([21, 31]), new Int32Array([21, 31]), true],
+    [new Uint32Array(), new Uint32Array(), true],
+    [new Uint32Array([21, 31]), new Uint32Array([21, 31]), true],
+    [new Float32Array(), new Float32Array(), true],
+    [new Float32Array([21, 31]), new Float32Array([21, 31]), true],
+    [new Float64Array(), new Float64Array(), true],
+    [new Float64Array([21, 31]), new Float64Array([21, 31]), true],
+    [new BigInt64Array(), new BigInt64Array(), true],
+    [new BigInt64Array([21n, 31n]), new BigInt64Array([21n, 31n]), true],
+    [new BigUint64Array(), new BigUint64Array(), true],
+    [new BigUint64Array([0n, 31n]), new BigUint64Array([0n, 31n]), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
-      equalUint8ClampedArray(a, b),
+      equalTypedArray(a, b),
       expected,
-      `equalUint8ClampedArray(${a}, ${b}) -> ${expected}`,
+      `equalTypedArray(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -1056,7 +1008,14 @@ Deno.test("equal", () => {
     [new Int8Array(), new Int8Array(), true],
     [new Uint8Array(), new Uint8Array(), true],
     [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
-    [new Uint16Array(), new Uint16Array(), false],
+    [new Int16Array(), new Int16Array(), true],
+    [new Uint16Array(), new Uint16Array(), true],
+    [new Int32Array(), new Int32Array(), true],
+    [new Uint32Array(), new Uint32Array(), true],
+    [new Float32Array(), new Float32Array(), true],
+    [new Float64Array(), new Float64Array(), true],
+    [new BigInt64Array(), new BigInt64Array(), true],
+    [new BigUint64Array(), new BigUint64Array(), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
