@@ -91,6 +91,7 @@ Deno.test("equalObjectExcludeJson", () => {
     [new Boolean(false), new Boolean(true), false],
     [new Boolean(true), new Boolean(false), false],
     [new Boolean(false), new Boolean(false), true],
+    [new Object(), new Object(), false],
   ];
 
   table.forEach(([a, b, expected]) => {
@@ -957,6 +958,7 @@ Deno.test("equal", () => {
       new URLSearchParams({ b: "tom", a: "hello" }),
       false,
     ],
+    [new Uint16Array(), new Uint16Array(), false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
