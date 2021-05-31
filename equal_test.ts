@@ -14,6 +14,7 @@ import {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
+  equalURL,
 } from "./equal.ts";
 
 Deno.test("equalJsonObject", () => {
@@ -446,6 +447,26 @@ Deno.test("equalDate", () => {
   });
 });
 
+Deno.test("equalURL", () => {
+  const BASE_URL = "https://google.com";
+  const table: [URL, URL, boolean][] = [
+    [new URL(BASE_URL), new URL(BASE_URL), true],
+    [new URL(BASE_URL), new URL(`${BASE_URL}/`), true],
+    [new URL(`${BASE_URL}/`), new URL(BASE_URL), true],
+    [new URL(`${BASE_URL}/`), new URL(`${BASE_URL}/`), true],
+    [new URL(`${BASE_URL}:3000`), new URL(`${BASE_URL}/`), false],
+    [new URL(`${BASE_URL}:3000`), new URL(`${BASE_URL}:80`), false],
+    [new URL(`${BASE_URL}:3000`), new URL(`${BASE_URL}:3000`), true],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalURL(a, b),
+      expected,
+      `equalURL(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
 Deno.test("equalFunction", () => {
   const a = () => 1;
   const b = () => 1;
@@ -829,6 +850,8 @@ Deno.test("equal", () => {
     ],
     [new Set(), new Set(), true],
     [new Set(), new Set([]), true],
+    [new URL("https://google.com"), new URL("https://google.com"), true],
+    [new URL("https://google.com"), new URL("https://google.com:3000"), false],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(

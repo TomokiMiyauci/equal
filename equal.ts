@@ -12,6 +12,7 @@ import {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
+  isBothURL,
 } from "./_is.ts";
 import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
@@ -51,6 +52,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothError, equalError],
     [isBothMap, equalMap],
     [isBothSet, equalSet],
+    [isBothURL, equalURL],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
   ];
 
@@ -169,6 +171,9 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   return a.every((val, index) => equal(val, b[index]));
 };
 
+const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
+  a.toString() === b.toString();
+
 export {
   equal,
   equalArray,
@@ -183,4 +188,5 @@ export {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
+  equalURL,
 };
