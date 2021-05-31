@@ -1,3 +1,14 @@
+# [v1.3.0-beta.2](https://github.com/TomokiMiyauci/equal/compare/v1.3.0-beta.1...v1.3.0-beta.2) (2021-05-31)
+
+## ✨ New Features
+- [`7e59ff1`](https://github.com/TomokiMiyauci/equal/commit/7e59ff1)   Add equality of URL object 
+- [`fd81dc6`](https://github.com/TomokiMiyauci/equal/commit/fd81dc6)   Add equality of URLSearchParams
+
+# [v1.3.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.2.0...v1.3.0-beta.1) (2021-05-30)
+
+## ✨ New Features
+- [`90c2572`](https://github.com/TomokiMiyauci/equal/commit/90c2572)   No bundle external dependency for bundle size, change outputs
+
 # [v1.2.0](https://github.com/TomokiMiyauci/equal/compare/v1.1.0...v1.2.0) (2021-05-25)
 
 ## ✨ New Features

@@ -1,5 +1,5 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { getOwnPropertySymbols } from "./constants.ts";
+import { getOwnPropertySymbols } from "./_constants.ts";
 
 const entriesSymbol = (
   val: Record<PropertyKey, unknown>,

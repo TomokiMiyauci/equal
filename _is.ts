@@ -31,6 +31,8 @@ const isBothRegExp = instanceofFactory(RegExp);
 const isBothError = instanceofFactory(Error);
 const isBothMap = instanceofFactory(Map);
 const isBothSet = instanceofFactory(Set);
+const isBothURL = instanceofFactory(URL);
+const isBothURLSearchParams = instanceofFactory(URLSearchParams);
 
 export {
   isBothArray,
@@ -44,4 +46,6 @@ export {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
+  isBothURL,
+  isBothURLSearchParams,
 };

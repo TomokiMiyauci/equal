@@ -1,14 +1,15 @@
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import ts from "rollup-plugin-ts";
 import { resolve } from "path";
 import { terser } from "rollup-plugin-terser";
 import replace from "@rollup/plugin-replace";
-import { main, module } from "./package.json";
+import { dependencies, main, module } from "./package.json";
+import { keys } from "fonction";
 
 const baseDir = resolve(__dirname);
 const inputFilePath = resolve(baseDir, "mod.ts");
 const banner =
   "/*! Copyright (c) 2021-present the Equal authors. All rights reserved. MIT license. */";
+const external = keys(dependencies);
 
 const replaceOption = {
   ".ts": "",
@@ -22,22 +23,20 @@ const config = [
       replace(replaceOption),
       ts({
         transpiler: "babel",
-        browserslist: ["defaults", "node 6", "supports es6-module"],
         tsconfig: (resolvedConfig) => ({
           ...resolvedConfig,
           declaration: false,
         }),
       }),
-      ,
-      nodeResolve(),
       terser(),
     ],
 
+    external,
+
     output: {
       file: main,
-      format: "umd",
+      format: "cjs",
       sourcemap: true,
-      name: "E",
       banner,
     },
   },
@@ -48,9 +47,10 @@ const config = [
       ts({
         transpiler: "babel",
       }),
-      nodeResolve(),
       terser(),
     ],
+
+    external,
 
     output: {
       file: module,
