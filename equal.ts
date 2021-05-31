@@ -13,6 +13,7 @@ import {
   isBothRegExp,
   isBothSet,
   isBothURL,
+  isBothURLSearchParams,
 } from "./_is.ts";
 import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
@@ -53,6 +54,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothMap, equalMap],
     [isBothSet, equalSet],
     [isBothURL, equalURL],
+    [isBothURLSearchParams, equalURLSearchParams],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
   ];
 
@@ -125,8 +127,15 @@ const equalKeyValueTupleNoOrder = <T extends [unknown, unknown][], U extends T>(
   a: T,
   b: U,
 ): boolean => {
-  return a.every((tupleA) =>
-    b.some((tupleB) => equalKeyValueTuple(tupleA, tupleB))
+  if (length(a) !== length(b)) return false;
+
+  // TODO: This logic is terrible performance
+  return and(
+    a.every((tupleA) => b.some((tupleB) => equalKeyValueTuple(tupleA, tupleB))),
+    () =>
+      b.every((tupleB) =>
+        a.some((tupleA) => equalKeyValueTuple(tupleA, tupleB))
+      ),
   );
 };
 
@@ -171,8 +180,17 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   return a.every((val, index) => equal(val, b[index]));
 };
 
+const equaltoString = <T extends Object>(
+  a: T,
+  b: T,
+): boolean => a.toString() === b.toString();
+
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
+const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
+  a: T,
+  b: U,
+) => equalKeyValueTupleNoOrder([...a], [...b]);
 
 export {
   equal,
@@ -188,5 +206,7 @@ export {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
+  equaltoString,
   equalURL,
+  equalURLSearchParams,
 };

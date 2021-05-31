@@ -15,6 +15,7 @@ import {
   equalRegExp,
   equalSet,
   equalURL,
+  equalURLSearchParams,
 } from "./equal.ts";
 
 Deno.test("equalJsonObject", () => {
@@ -466,6 +467,95 @@ Deno.test("equalURL", () => {
     );
   });
 });
+Deno.test("equalURLSearchParams", () => {
+  const table: [URLSearchParams, URLSearchParams, boolean][] = [
+    [new URLSearchParams(), new URLSearchParams(), true],
+    [new URLSearchParams([]), new URLSearchParams(), true],
+    [new URLSearchParams(), new URLSearchParams([]), true],
+    [new URLSearchParams([]), new URLSearchParams([]), true],
+    [new URLSearchParams({}), new URLSearchParams({}), true],
+    [new URLSearchParams({}), new URLSearchParams(), true],
+    [new URLSearchParams(), new URLSearchParams({}), true],
+    [new URLSearchParams({ a: "hello" }), new URLSearchParams(), false],
+    [
+      new URLSearchParams({ a: "hello" }),
+      new URLSearchParams({ a: "hello" }),
+      true,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ a: "hello" }),
+      false,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ a: "hello", b: "world" }),
+      true,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ b: "world", a: "hello" }),
+      true,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ a: "world", b: "hello" }),
+      false,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ a: "world", b: "hello", c: "tom" }),
+      false,
+    ],
+    [
+      new URLSearchParams([["a", "hello"]]),
+      new URLSearchParams([["a", "hello"]]),
+      true,
+    ],
+    [
+      new URLSearchParams([["a", "hello"]]),
+      new URLSearchParams([["a", "world"]]),
+      false,
+    ],
+    [
+      new URLSearchParams([["a", "hello"], ["b", "world"]]),
+      new URLSearchParams([["a", "hello"]]),
+      false,
+    ],
+    [
+      new URLSearchParams([["a", "hello"]]),
+      new URLSearchParams([["a", "hello"], ["b", "world"]]),
+      false,
+    ],
+    [
+      new URLSearchParams([["a", "hello"], ["b", "world"]]),
+      new URLSearchParams([["a", "hello"], ["b", "world"]]),
+      true,
+    ],
+    [
+      new URLSearchParams([["a", "hello"], ["b", "world"]]),
+      new URLSearchParams([["b", "world"], ["a", "hello"]]),
+      true,
+    ],
+    [
+      new URLSearchParams([["a", "hello"]]),
+      new URLSearchParams({ a: "hello" }),
+      true,
+    ],
+    [
+      new URLSearchParams([["b", "world"], ["a", "hello"]]),
+      new URLSearchParams({ a: "hello", b: "world" }),
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalURLSearchParams(a, b),
+      expected,
+      `equalURLSearchParams(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
 
 Deno.test("equalFunction", () => {
   const a = () => 1;
@@ -567,7 +657,7 @@ Deno.test("equalKeyValueTupleNoOrder", () => {
     [[], [], true],
     [[[1, 2], [3, 4]], [[1, 2]], false],
     [[[1, 2], [3, 4]], [[1, 2], [1, 2]], false],
-    [[[1, 2], [1, 2]], [[1, 2], [3, 4]], true],
+    [[[1, 2], [1, 2]], [[1, 2], [3, 4]], false],
     [[[undefined, null], [null, undefined]], [[null, undefined]], false],
     [[[undefined, null], [null, undefined]], [[null, undefined], [
       undefined,
@@ -579,7 +669,7 @@ Deno.test("equalKeyValueTupleNoOrder", () => {
     ]], false],
     [[[1, ""]], [[1, ""]], true],
     [[[1, ""]], [[2, ""]], false],
-    // [[[1, ""]], [[2, ""], [1, ""]], false],
+    [[[1, ""]], [[2, ""], [1, ""]], false],
     [[[1, ""], [2, ""]], [[2, ""], [1, ""]], true],
     [[["", ""]], [["", ""]], true],
     [[["", ""], [1, 2], [null, undefined]], [[null, undefined], ["", ""], [
@@ -852,6 +942,21 @@ Deno.test("equal", () => {
     [new Set(), new Set([]), true],
     [new URL("https://google.com"), new URL("https://google.com"), true],
     [new URL("https://google.com"), new URL("https://google.com:3000"), false],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ a: "hello", b: "world" }),
+      true,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ b: "world", a: "hello" }),
+      true,
+    ],
+    [
+      new URLSearchParams({ a: "hello", b: "world" }),
+      new URLSearchParams({ b: "tom", a: "hello" }),
+      false,
+    ],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
