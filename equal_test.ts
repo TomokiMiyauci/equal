@@ -7,6 +7,7 @@ import {
   equalDate,
   equalError,
   equalFunction,
+  equalInt8Array,
   equalJsonObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,
@@ -255,6 +256,31 @@ Deno.test("equalArray", () => {
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(equalArray(a, b), expected, `equalArray(?, ?) -> ${expected}`);
+  });
+});
+
+Deno.test("equalInt8Array", () => {
+  const table: [Int8Array, Int8Array, boolean][] = [
+    [new Int8Array(), new Int8Array(), true],
+    [new Int8Array([]), new Int8Array(), true],
+    [new Int8Array(), new Int8Array([]), true],
+    [new Int8Array([]), new Int8Array([]), true],
+    [new Int8Array(0), new Int8Array(0), true],
+    [new Int8Array(0), new Int8Array(), true],
+    [new Int8Array(), new Int8Array(0), true],
+    [new Int8Array(0), new Int8Array(1), false],
+    [new Int8Array(1), new Int8Array(1), true],
+    [new Int8Array([1, 2, 3]), new Int8Array([1, 2, 3]), true],
+    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 0]), true],
+    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 1]), false],
+    [new Int8Array([127, -128, 0]), new Int8Array([127, -128, 0, 1]), false],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalInt8Array(a, b),
+      expected,
+      `equalInt8Array(${a}, ${b}) -> ${expected}`,
+    );
   });
 });
 
@@ -958,6 +984,7 @@ Deno.test("equal", () => {
       new URLSearchParams({ b: "tom", a: "hello" }),
       false,
     ],
+    [new Int8Array(), new Int8Array(), true],
     [new Uint16Array(), new Uint16Array(), false],
   ];
   table.forEach(([a, b, expected]) => {

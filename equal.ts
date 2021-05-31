@@ -5,6 +5,7 @@ import {
   isBothDate,
   isBothError,
   isBothFunction,
+  isBothInt8Array,
   isBothJSONObject,
   isBothMap,
   isBothNumber,
@@ -53,6 +54,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothError, equalError],
     [isBothMap, equalMap],
     [isBothSet, equalSet],
+    [isBothInt8Array, equalInt8Array],
     [isBothURL, equalURL],
     [isBothURLSearchParams, equalURLSearchParams],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
@@ -180,6 +182,11 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   return a.every((val, index) => equal(val, b[index]));
 };
 
+const equalInt8Array = <T extends Int8Array, U extends T>(
+  a: T,
+  b: U,
+): boolean => equalArray([...a], [...b]);
+
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
@@ -194,6 +201,7 @@ export {
   equalDate,
   equalError,
   equalFunction,
+  equalInt8Array,
   equalJsonObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,

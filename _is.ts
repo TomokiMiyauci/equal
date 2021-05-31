@@ -33,12 +33,14 @@ const isBothMap = instanceofFactory(Map);
 const isBothSet = instanceofFactory(Set);
 const isBothURL = instanceofFactory(URL);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
+const isBothInt8Array = instanceofFactory(Int8Array);
 
 export {
   isBothArray,
   isBothDate,
   isBothError,
   isBothFunction,
+  isBothInt8Array,
   isBothJSONObject,
   isBothMap,
   isBothNumber,
