@@ -33,6 +33,7 @@ const isBothError = instanceofFactory(Error);
 const isBothMap = instanceofFactory(Map);
 const isBothSet = instanceofFactory(Set);
 const isBothURL = instanceofFactory(URL);
+const isBothArrayBuffer = instanceofFactory(ArrayBuffer);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
 const isBothTypedArray = <T, U extends T>(a: T, b: U): [boolean, boolean] => {
   const result = [
@@ -58,6 +59,7 @@ const isBothTypedArray = <T, U extends T>(a: T, b: U): [boolean, boolean] => {
 
 export {
   isBothArray,
+  isBothArrayBuffer,
   isBothDate,
   isBothError,
   isBothFunction,

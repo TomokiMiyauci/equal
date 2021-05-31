@@ -3,6 +3,7 @@ import { assertEquals, isSymbol } from "./dev_deps.ts";
 import {
   equal,
   equalArray,
+  equalArrayBuffer,
   equalConstructor,
   equalDate,
   equalError,
@@ -318,6 +319,26 @@ Deno.test("equalRegExp", () => {
       equalRegExp(a, b),
       expected,
       `equalRegExp(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalArrayBuffer", () => {
+  const table: [ArrayBuffer, ArrayBuffer, boolean][] = [
+    [new ArrayBuffer(0), new ArrayBuffer(0), true],
+    [new ArrayBuffer(0), new ArrayBuffer(1), false],
+    [new ArrayBuffer(1), new ArrayBuffer(1), true],
+    [
+      new ArrayBuffer(1000),
+      new ArrayBuffer(1000),
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalArrayBuffer(a, b),
+      expected,
+      `equalArrayBuffer(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -1016,6 +1037,7 @@ Deno.test("equal", () => {
     [new Float64Array(), new Float64Array(), true],
     [new BigInt64Array(), new BigInt64Array(), true],
     [new BigUint64Array(), new BigUint64Array(), true],
+    [new ArrayBuffer(0), new ArrayBuffer(0), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(

@@ -2,6 +2,7 @@
 import { and, AnyFn, entries, F, has, ifElse, length, N, xor } from "./deps.ts";
 import {
   isBothArray,
+  isBothArrayBuffer,
   isBothDate,
   isBothError,
   isBothFunction,
@@ -55,6 +56,7 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
     [isBothMap, equalMap],
     [isBothSet, equalSet],
     [isBothTypedArray, equalTypedArray],
+    [isBothArrayBuffer, equalArrayBuffer],
     [isBothURL, equalURL],
     [isBothURLSearchParams, equalURLSearchParams],
     [isBothObjectExcludeJSON, equalObjectExcludeJson],
@@ -182,11 +184,6 @@ const equalArray = <T extends unknown[], U extends T>(a: T, b: U): boolean => {
   return a.every((val, index) => equal(val, b[index]));
 };
 
-const equalInt8Array = <T extends Int8Array, U extends T>(
-  a: T,
-  b: U,
-): boolean => equalArray([...a], [...b]);
-
 const equalTypedArray = <
   T extends
     | Int8Array
@@ -205,6 +202,11 @@ const equalTypedArray = <
   b: T,
 ): boolean => equalArray([...a], [...b]);
 
+const equalArrayBuffer = <T extends ArrayBuffer, U extends T>(
+  a: T,
+  b: U,
+): boolean => a.byteLength === b.byteLength;
+
 const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
@@ -215,11 +217,11 @@ const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
 export {
   equal,
   equalArray,
+  equalArrayBuffer,
   equalConstructor,
   equalDate,
   equalError,
   equalFunction,
-  equalInt8Array,
   equalJsonObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,
