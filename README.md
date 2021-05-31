@@ -244,7 +244,7 @@ equal(/hello/g, /hello/g); // true
 
 ### :globe_with_meridians: Browser
 
-The module that bundles the dependencies is obtained from [skypack](https://www.skypack.dev/).
+The module that bundles the dependencies is obtained from [skypack](https://www.skypack.dev/view/lauqe).
 
 ```html
 <script type="module">
