@@ -64,6 +64,8 @@ Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
 
 ## :zap: Example
 
+### [Primitive](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#primitive_values)
+
 ```ts
 equal('', '') // true
 equal(NaN, NaN) // true
@@ -79,7 +81,11 @@ equal(true, false) // false
 const symbol = Symbol("hello");
 equal(symbol, symbol) // true
 equal(Symbol('hello'), Symbol('hello')) // false
+```
 
+### [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#objects)
+
+```ts
 equal({}, {}) // true
 equal({ "": undefined }, { "": undefined }) // true
 equal({ "": undefined }, { "": undefined, a: 1 }) // false
@@ -154,6 +160,8 @@ The following objects work correctly.
 - [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
 - [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#maps)
 - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#sets)
+- [`URL`](https://developer.mozilla.org/en-US/docs/Web/API/URL)
+- [`URLSearchParams`](https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams)
 - [`String`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String)
 - [`Number`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number)
 - [`Boolean`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean)
