@@ -1,4 +1,3 @@
-import { nodeResolve } from "@rollup/plugin-node-resolve";
 import ts from "rollup-plugin-ts";
 import { resolve } from "path";
 import { terser } from "rollup-plugin-terser";
@@ -24,14 +23,12 @@ const config = [
       replace(replaceOption),
       ts({
         transpiler: "babel",
-        browserslist: ["defaults", "node 6", "supports es6-module"],
         tsconfig: (resolvedConfig) => ({
           ...resolvedConfig,
           declaration: false,
         }),
       }),
-      ,
-      nodeResolve(),
+      terser(),
     ],
 
     external,
@@ -50,7 +47,7 @@ const config = [
       ts({
         transpiler: "babel",
       }),
-      nodeResolve(),
+      terser(),
     ],
 
     external,
