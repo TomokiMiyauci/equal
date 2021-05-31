@@ -34,6 +34,7 @@ const isBothSet = instanceofFactory(Set);
 const isBothURL = instanceofFactory(URL);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
 const isBothInt8Array = instanceofFactory(Int8Array);
+const isBothUint8Array = instanceofFactory(Uint8Array);
 
 export {
   isBothArray,
@@ -48,6 +49,7 @@ export {
   isBothPrimitive,
   isBothRegExp,
   isBothSet,
+  isBothUint8Array,
   isBothURL,
   isBothURLSearchParams,
 };

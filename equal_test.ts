@@ -15,6 +15,7 @@ import {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
+  equalUint8Array,
   equalURL,
   equalURLSearchParams,
 } from "./equal.ts";
@@ -280,6 +281,31 @@ Deno.test("equalInt8Array", () => {
       equalInt8Array(a, b),
       expected,
       `equalInt8Array(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalUint8Array", () => {
+  const table: [Uint8Array, Uint8Array, boolean][] = [
+    [new Uint8Array(), new Uint8Array(), true],
+    [new Uint8Array([]), new Uint8Array(), true],
+    [new Uint8Array(), new Uint8Array([]), true],
+    [new Uint8Array([]), new Uint8Array([]), true],
+    [new Uint8Array(0), new Uint8Array(0), true],
+    [new Uint8Array(0), new Uint8Array(), true],
+    [new Uint8Array(), new Uint8Array(0), true],
+    [new Uint8Array(0), new Uint8Array(1), false],
+    [new Uint8Array(1), new Uint8Array(1), true],
+    [new Uint8Array([1, 2, 3]), new Uint8Array([1, 2, 3]), true],
+    [new Uint8Array([255, -128, 0]), new Uint8Array([255, -128, 0]), true],
+    [new Uint8Array([255, -128, 0]), new Uint8Array([127, -128, 1]), false],
+    [new Uint8Array([255, 0]), new Uint8Array([255, 0, 0]), false],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalUint8Array(a, b),
+      expected,
+      `equalUint8Array(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -985,6 +1011,7 @@ Deno.test("equal", () => {
       false,
     ],
     [new Int8Array(), new Int8Array(), true],
+    [new Uint8Array(), new Uint8Array(), true],
     [new Uint16Array(), new Uint16Array(), false],
   ];
   table.forEach(([a, b, expected]) => {
