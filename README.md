@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="logo image" src="img/logo.png" />
+  <img alt="logo image" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/c_scale,w_1280/v1622422123/projects/equal/logo.png" />
   <h1 align="center">equal</h1>
 </p>
 
@@ -52,7 +52,7 @@ The supported built-in objects are [here](#built-in-objects)
 - :zap: Multi runtime support (`Deno`, `Node.js` and Browsers)
 - :books: Pure TypeScript and provides type definition
 - :white_check_mark: [Rambda](https://selfrefactor.github.io/rambda/#/?id=equals)'s all test case is passed
-- :earth_americas: Universal module, providing `ES modules` and `UMD`
+- :earth_americas: Universal module, providing `ES modules` and `Commonjs`
 - :package: Optimized, super slim size
 - :page_facing_up: TSDoc-style comments
 
