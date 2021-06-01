@@ -1,5 +1,15 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { and, AnyFn, entries, F, has, ifElse, length, N, xor } from "./deps.ts";
+import {
+  and,
+  AnyFn,
+  entries,
+  has,
+  ifElse,
+  isNil,
+  length,
+  N,
+  not,
+} from "./deps.ts";
 import {
   isBothArray,
   isBothArrayBuffer,
@@ -10,7 +20,6 @@ import {
   isBothMap,
   isBothNumber,
   isBothObjectExcludeJSON,
-  isBothPrimitive,
   isBothRegExp,
   isBothSet,
   isBothTypedArray,
@@ -20,7 +29,7 @@ import {
 import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
 type Verdict = [
-  AnyFn<unknown, readonly [boolean, boolean]>,
+  AnyFn<unknown, boolean>,
   AnyFn<any, boolean>,
 ];
 
@@ -41,12 +50,19 @@ type Verdict = [
  *
  * @public
  */
+
+const notIsNil = not(isNil);
 const equal = <T, U extends T>(a: T, b: U): boolean => {
+  if (and(notIsNil(a), notIsNil(b))) {
+    if ((a as any).constructor.name !== (b as any).constructor.name) {
+      return false;
+    }
+  }
+
   if (is(a, b)) return true;
 
   const verdictTable: Verdict[] = [
     [isBothNumber, (a: unknown, b: unknown) => a === b],
-    [isBothPrimitive, F],
     [isBothJSONObject, equalJsonObject],
     [isBothArray, equalArray],
     [isBothDate, equalDate],
@@ -63,9 +79,9 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   ];
 
   for (const [filter, fn] of verdictTable) {
-    const [f1, f2] = filter(a, b);
-    if (xor(f1, f2)) return false;
-    if (and(f1, f2)) return fn(a, b);
+    if (filter(a, b)) {
+      return fn(a, b);
+    }
   }
   return false;
 };
