@@ -1,3 +1,12 @@
+# [v1.4.0](https://github.com/TomokiMiyauci/equal/compare/v1.3.0...v1.4.0) (2021-06-01)
+
+## ✨ New Features
+- [`ffe286c`](https://github.com/TomokiMiyauci/equal/commit/ffe286c)   Add equality of Int8Array (Issues: [`#16`](https://github.com/TomokiMiyauci/equal/issues/16))
+- [`abbc99a`](https://github.com/TomokiMiyauci/equal/commit/abbc99a)   Add equality of UIint8Array (Issues: [`#17`](https://github.com/TomokiMiyauci/equal/issues/17))
+- [`495666e`](https://github.com/TomokiMiyauci/equal/commit/495666e)   Add equality of Uint8ClampedArray (Issues: [`#18`](https://github.com/TomokiMiyauci/equal/issues/18))
+- [`439993b`](https://github.com/TomokiMiyauci/equal/commit/439993b)   Add equality of TypedArray (Issues: [`#19`](https://github.com/TomokiMiyauci/equal/issues/19))
+- [`dfb37b4`](https://github.com/TomokiMiyauci/equal/commit/dfb37b4)   Add equality of ArrayBuffer (Issues: [`#20`](https://github.com/TomokiMiyauci/equal/issues/20))
+
 # [v1.4.0-beta.2](https://github.com/TomokiMiyauci/equal/compare/v1.4.0-beta.1...v1.4.0-beta.2) (2021-05-31)
 
 ## ✨ New Features
