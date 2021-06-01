@@ -3,6 +3,7 @@ import { assertEquals, isSymbol } from "./dev_deps.ts";
 import {
   equal,
   equalArray,
+  equalArrayBuffer,
   equalConstructor,
   equalDate,
   equalError,
@@ -14,6 +15,7 @@ import {
   equalObjectExcludeJson,
   equalRegExp,
   equalSet,
+  equalTypedArray,
   equalURL,
   equalURLSearchParams,
 } from "./equal.ts";
@@ -258,6 +260,52 @@ Deno.test("equalArray", () => {
   });
 });
 
+Deno.test("equalTypedArray", () => {
+  type ArrayLike =
+    | Int8Array
+    | Uint8Array
+    | Uint8ClampedArray
+    | Int16Array
+    | Uint16Array
+    | Int32Array
+    | Uint32Array
+    | Float32Array
+    | Float64Array
+    | BigInt64Array
+    | BigUint64Array;
+  const table: [ArrayLike, ArrayLike, boolean][] = [
+    [new Int8Array(), new Int8Array(), true],
+    [new Int8Array([21, 31]), new Int8Array([21, 31]), true],
+    [new Uint8Array(), new Uint8Array(), true],
+    [new Uint8Array([21, 31]), new Uint8Array([21, 31]), true],
+    [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
+    [new Uint8ClampedArray([21, 31]), new Uint8ClampedArray([21, 31]), true],
+    [new Int16Array(), new Int16Array(), true],
+    [new Int16Array([21, 31]), new Int16Array([21, 31]), true],
+    [new Uint16Array(), new Uint16Array(), true],
+    [new Uint16Array([21, 31]), new Uint16Array([21, 31]), true],
+    [new Int32Array(), new Int32Array(), true],
+    [new Int32Array([21, 31]), new Int32Array([21, 31]), true],
+    [new Uint32Array(), new Uint32Array(), true],
+    [new Uint32Array([21, 31]), new Uint32Array([21, 31]), true],
+    [new Float32Array(), new Float32Array(), true],
+    [new Float32Array([21, 31]), new Float32Array([21, 31]), true],
+    [new Float64Array(), new Float64Array(), true],
+    [new Float64Array([21, 31]), new Float64Array([21, 31]), true],
+    [new BigInt64Array(), new BigInt64Array(), true],
+    [new BigInt64Array([21n, 31n]), new BigInt64Array([21n, 31n]), true],
+    [new BigUint64Array(), new BigUint64Array(), true],
+    [new BigUint64Array([0n, 31n]), new BigUint64Array([0n, 31n]), true],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalTypedArray(a, b),
+      expected,
+      `equalTypedArray(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
 Deno.test("equalRegExp", () => {
   const table: [RegExp, RegExp, boolean][] = [
     [/s/, /s/, true],
@@ -271,6 +319,26 @@ Deno.test("equalRegExp", () => {
       equalRegExp(a, b),
       expected,
       `equalRegExp(${a}, ${b}) -> ${expected}`,
+    );
+  });
+});
+
+Deno.test("equalArrayBuffer", () => {
+  const table: [ArrayBuffer, ArrayBuffer, boolean][] = [
+    [new ArrayBuffer(0), new ArrayBuffer(0), true],
+    [new ArrayBuffer(0), new ArrayBuffer(1), false],
+    [new ArrayBuffer(1), new ArrayBuffer(1), true],
+    [
+      new ArrayBuffer(1000),
+      new ArrayBuffer(1000),
+      true,
+    ],
+  ];
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalArrayBuffer(a, b),
+      expected,
+      `equalArrayBuffer(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -958,7 +1026,18 @@ Deno.test("equal", () => {
       new URLSearchParams({ b: "tom", a: "hello" }),
       false,
     ],
-    [new Uint16Array(), new Uint16Array(), false],
+    [new Int8Array(), new Int8Array(), true],
+    [new Uint8Array(), new Uint8Array(), true],
+    [new Uint8ClampedArray(), new Uint8ClampedArray(), true],
+    [new Int16Array(), new Int16Array(), true],
+    [new Uint16Array(), new Uint16Array(), true],
+    [new Int32Array(), new Int32Array(), true],
+    [new Uint32Array(), new Uint32Array(), true],
+    [new Float32Array(), new Float32Array(), true],
+    [new Float64Array(), new Float64Array(), true],
+    [new BigInt64Array(), new BigInt64Array(), true],
+    [new BigUint64Array(), new BigUint64Array(), true],
+    [new ArrayBuffer(0), new ArrayBuffer(0), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
