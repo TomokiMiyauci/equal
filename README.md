@@ -16,7 +16,6 @@ TypeScript-first deep equivalence comparison between two values
 [![deno doc](https://doc.deno.land/badge.svg)](https://doc.deno.land/https/deno.land/x/equal/mod.ts)
 [![deno version](https://img.shields.io/badge/deno-^1.6.0-lightgrey?logo=deno)](https://github.com/denoland/deno)
 ![node support version](https://img.shields.io/badge/node-%5E6.17.0-yellow)
-![bundle size](https://img.shields.io/bundlephobia/min/lauqe)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
 
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
@@ -32,7 +31,8 @@ TypeScript-first deep equivalence comparison between two values
 
 ---
 
-Equivalent comparison of Object data structures. It supports many built-in objects and can be compared with `Date`, `Array` or `Object`.
+Equivalent comparison of Object data structures. It supports many built-in
+objects and can be compared with `Date`, `Array` or `Object`.
 
 The supported built-in objects are [here](#built-in-objects)
 
@@ -51,14 +51,17 @@ The supported built-in objects are [here](#built-in-objects)
 
 - :zap: Multi runtime support (`Deno`, `Node.js` and Browsers)
 - :books: Pure TypeScript and provides type definition
-- :white_check_mark: [Rambda](https://selfrefactor.github.io/rambda/#/?id=equals)'s all test case is passed
+- :white_check_mark:
+  [Rambda](https://selfrefactor.github.io/rambda/#/?id=equals)'s all test case
+  is passed
 - :earth_americas: Universal module, providing `ES modules` and `Commonjs`
 - :package: Optimized, super slim size
 - :page_facing_up: TSDoc-style comments
 
 ### Package name
 
-Deno: `equal` ([deno.land](https://deno.land/x/equal), [nest.land](https://nest.land/package/equal))
+Deno: `equal` ([deno.land](https://deno.land/x/equal),
+[nest.land](https://nest.land/package/equal))
 
 Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
 
@@ -67,20 +70,20 @@ Node.js: `lauqe` ([npm](https://www.npmjs.com/package/lauqe))
 ### [Primitive](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#primitive_values)
 
 ```ts
-equal('', '') // true
-equal(NaN, NaN) // true
-equal(0, 0) // true
-equal(+0, 0) // true
-equal(-0, 0) // true
-equal(+0, -0) // true
-equal(0n, 0n) // true
-equal(undefined, undefined) // true
-equal(null, null) // true
-equal(undefined, null) // false
-equal(true, false) // false
+equal("", ""); // true
+equal(NaN, NaN); // true
+equal(0, 0); // true
+equal(+0, 0); // true
+equal(-0, 0); // true
+equal(+0, -0); // true
+equal(0n, 0n); // true
+equal(undefined, undefined); // true
+equal(null, null); // true
+equal(undefined, null); // false
+equal(true, false); // false
 const symbol = Symbol("hello");
-equal(symbol, symbol) // true
-equal(Symbol('hello'), Symbol('hello')) // false
+equal(symbol, symbol); // true
+equal(Symbol("hello"), Symbol("hello")); // false
 ```
 
 ### [Object](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Data_structures#objects)
@@ -122,15 +125,16 @@ equal(new Set([[], {}, new Map(), new Set()]), new Set([[], {}, new Map(), new S
 ### Type definition
 
 ```ts
-declare const equal: <T, U extends T>(a: T, b: U) => boolean
+declare const equal: <T, U extends T>(a: T, b: U) => boolean;
 ```
 
 | Parameter | Description |
 | --------- | ----------- |
-| `a` | Any value |
-| `b` | Any value |
+| `a`       | Any value   |
+| `b`       | Any value   |
 
-`=>` Return `true` if the reference memory is the same or the property members and their values are the same
+`=>` Return `true` if the reference memory is the same or the property members
+and their values are the same
 
 ### Definition of Equality
 
@@ -138,15 +142,16 @@ Equality is defined as the data structure and property values are equivalent.
 
 #### Same-value-zero
 
-Numerical equivalence is based on [Same-value-zero](https://developer.mozilla.org/docs/Web/JavaScript/Equality_comparisons_and_sameness#same-value-zero_equality).  
+Numerical equivalence is based on
+[Same-value-zero](https://developer.mozilla.org/docs/Web/JavaScript/Equality_comparisons_and_sameness#same-value-zero_equality).\
 That is, all of the following comparisons are considered equivalent.
 
 ```ts
-equal(NaN, NaN) // true
-equal(0, 0) // true
-equal(+0, 0) // true
-equal(-0, 0) // true
-equal(+0, -0) // true
+equal(NaN, NaN); // true
+equal(0, 0); // true
+equal(+0, 0); // true
+equal(-0, 0); // true
+equal(+0, -0); // true
 ```
 
 #### Built-in objects
@@ -154,11 +159,33 @@ equal(+0, -0) // true
 The following objects work correctly.
 
 - [`Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array)
-- [`Typed Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays) ( [`Int8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array), [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array), [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray), [`Int16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array), [`Uint16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array), [`Int32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array), [`Uint32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array), [`Float32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array), [`Float64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array), [`BigInt64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt64Array), [`BigUint64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigUint64Array) )
+- [`Typed Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Typed_arrays)
+  (
+  [`Int8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8Array),
+  [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array),
+  [`Uint8ClampedArray`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8ClampedArray),
+  [`Int16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16Array),
+  [`Uint16Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16Array),
+  [`Int32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32Array),
+  [`Uint32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32Array),
+  [`Float32Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32Array),
+  [`Float64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float64Array),
+  [`BigInt64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt64Array),
+  [`BigUint64Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigUint64Array)
+  )
 - [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer)
 - [`Object`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
 - [`Date`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date)
-- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error) ( [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError), [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError), [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError), [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError), [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError), [`URIError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError), [`AggregateError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError) )
+- [`Error`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error)
+  (
+  [`EvalError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/EvalError),
+  [`RangeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RangeError),
+  [`ReferenceError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ReferenceError),
+  [`SyntaxError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SyntaxError),
+  [`TypeError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/TypeError),
+  [`URIError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/URIError),
+  [`AggregateError`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/AggregateError)
+  )
 - [`RegExp`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp)
 - [`Map`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#maps)
 - [`Set`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Keyed_collections#sets)
@@ -178,7 +205,8 @@ The TypeScript version must be `4.1.0` or higher.
 
 This project provides `ES modules` and `Commonjs`.
 
-If you have an opinion about what to support, you can open an [issue](https://github.com/TomokiMiyauci/equal/issues) to discuss it.
+If you have an opinion about what to support, you can open an
+[issue](https://github.com/TomokiMiyauci/equal/issues) to discuss it.
 
 The `browserslist` has the following settings.
 
@@ -191,8 +219,8 @@ node 6
 ```
 
 | <img width="30px" height="30px" alt="Deno" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/deno.svg"></br>Deno | <img width="24px" height="24px" alt="Node.js" src="https://res.cloudinary.com/dz3vsv9pg/image/upload/v1620998361/logos/nodejs.svg"></br>Node.js | <img width="24px" height="24px" alt="IE / Edge" src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/edge/edge_48x48.png"></br>Edge | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/firefox/firefox_48x48.png" alt="Firefox" width="24px" height="24px" /></br>Firefox | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/chrome/chrome_48x48.png" alt="Chrome" width="24px" height="24px" /></br>Chrome | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari/safari_48x48.png" alt="Safari" width="24px" height="24px" /></br>Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/safari-ios/safari-ios_48x48.png" alt="iOS Safari" width="24px" height="24px" /></br>iOS Safari | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/samsung-internet/samsung-internet_48x48.png" alt="Samsung" width="24px" height="24px" /></br>Samsung | <img src="https://raw.githubusercontent.com/alrra/browser-logos/master/src/opera/opera_48x48.png" alt="Opera" width="24px" height="24px" /></br>Opera |
-| - | -- | - | -- | - | - | - | -- | -- |
-| `^1.6.0` | `^6.17.0` | `^83` | `^78` | `^83` | `^11` | `^12.0` | `^7.2` | `^68` |
+| --------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `^1.6.0`                                                                                                                                | `^6.17.0`                                                                                                                                       | `^83`                                                                                                                                                | `^78`                                                                                                                                                         | `^83`                                                                                                                                                     | `^11`                                                                                                                                                     | `^12.0`                                                                                                                                                                   | `^7.2`                                                                                                                                                                          | `^68`                                                                                                                                                 |
 
 ## :dizzy: Usage
 
@@ -233,7 +261,7 @@ yarn add lauqe
 ```ts
 import { equal } from "lauqe";
 
-equal(new Date('2000/1/1'), new Date('2000/1/1')); // true
+equal(new Date("2000/1/1"), new Date("2000/1/1")); // true
 ```
 
 #### Commonjs
@@ -246,7 +274,8 @@ equal(/hello/g, /hello/g); // true
 
 ### :globe_with_meridians: Browser
 
-The module that bundles the dependencies is obtained from [skypack](https://www.skypack.dev/view/lauqe).
+The module that bundles the dependencies is obtained from
+[skypack](https://www.skypack.dev/view/lauqe).
 
 ```html
 <script type="module">
@@ -257,7 +286,8 @@ The module that bundles the dependencies is obtained from [skypack](https://www.
 
 ## :handshake: Contributing
 
-Contributions, issues and feature requests are welcome!<br />Feel free to check [issues](https://github.com/TomokiMiyauci/equal/issues).
+Contributions, issues and feature requests are welcome!<br />Feel free to check
+[issues](https://github.com/TomokiMiyauci/equal/issues).
 
 [Contributing guide](./.github/CONTRIBUTING.md)
 
