@@ -18,6 +18,7 @@ TypeScript-first deep equivalence comparison between two values
 ![node support version](https://img.shields.io/badge/node-%5E6.17.0-yellow)
 ![npm download](https://img.shields.io/npm/dw/lauqe?color=blue)
 
+![GitHub (Pre-)Release Date](https://img.shields.io/github/release-date-pre/TomokiMiyauci/equal)
 [![dependencies Status](https://status.david-dm.org/gh/TomokiMiyauci/equal.svg)](https://david-dm.org/TomokiMiyauci/equal)
 [![codecov](https://codecov.io/gh/TomokiMiyauci/equal/branch/main/graph/badge.svg?token=SPAi5Pv2wd)](https://codecov.io/gh/TomokiMiyauci/equal)
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/f43b1c317e11445399d85ce6efc06504)](https://www.codacy.com/gh/TomokiMiyauci/equal/dashboard?utm_source=github.com&utm_medium=referral&utm_content=TomokiMiyauci/equal&utm_campaign=Badge_Grade)
