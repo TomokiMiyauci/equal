@@ -1,6 +1,7 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 export {
   and,
+  constructorName,
   entries,
   F,
   has,
@@ -20,6 +21,9 @@ export {
   not,
   or,
   xor,
-} from "https://deno.land/x/fonction@v1.8.0-beta.6/mod.ts";
+} from "https://deno.land/x/fonction@v1.8.0-beta.7/mod.ts";
 
-export type { AnyFn } from "https://deno.land/x/fonction@v1.8.0-beta.6/mod.ts";
+export type {
+  AnyFn,
+  Primitive,
+} from "https://deno.land/x/fonction@v1.8.0-beta.7/mod.ts";

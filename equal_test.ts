@@ -1,5 +1,5 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { assertEquals, isSymbol } from "./dev_deps.ts";
+import { assertEquals, isSymbol, Primitive } from "./dev_deps.ts";
 import {
   equal,
   equalArray,
@@ -13,12 +13,46 @@ import {
   equalKeyValueTupleNoOrder,
   equalMap,
   equalObjectExcludeJson,
+  equalPrimitive,
   equalRegExp,
   equalSet,
   equalTypedArray,
   equalURL,
   equalURLSearchParams,
 } from "./equal.ts";
+
+Deno.test("equalPrimitive", () => {
+  const symbol = Symbol("hello");
+  const symbol2 = Symbol("world");
+
+  const table: [
+    Primitive,
+    Primitive,
+    boolean,
+  ][] = [
+    ["", "", true],
+    [NaN, NaN, true],
+    [0, 0, true],
+    [+0, 0, true],
+    [-0, 0, true],
+    [+0, -0, true],
+    [0n, 0n, true],
+    [undefined, undefined, true],
+    [null, null, true],
+    [undefined, null, false],
+    [true, false, false],
+    [symbol, symbol, true],
+    [symbol, symbol2, false],
+  ];
+
+  table.forEach(([a, b, expected]) => {
+    assertEquals(
+      equalPrimitive(a, b),
+      expected,
+      `equalPrimitive(${String(a)}, ${String(b)}) -> ${expected}`,
+    );
+  });
+});
 
 Deno.test("equalJsonObject", () => {
   const symbol = Symbol("hello");

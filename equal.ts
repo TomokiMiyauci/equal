@@ -2,13 +2,14 @@
 import {
   and,
   AnyFn,
+  constructorName,
   entries,
   has,
   ifElse,
-  isNil,
   length,
   N,
-  not,
+  or,
+  Primitive,
 } from "./deps.ts";
 import {
   isBothArray,
@@ -18,8 +19,8 @@ import {
   isBothFunction,
   isBothJSONObject,
   isBothMap,
-  isBothNumber,
   isBothObjectExcludeJSON,
+  isBothPrimitive,
   isBothRegExp,
   isBothSet,
   isBothTypedArray,
@@ -28,10 +29,6 @@ import {
 } from "./_is.ts";
 import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
-type Verdict = [
-  AnyFn<unknown, boolean>,
-  AnyFn<any, boolean>,
-];
 
 /**
  * Returns `true` if its arguments are equivalent, `false` otherwise. Handles cyclical data structures.
@@ -51,18 +48,14 @@ type Verdict = [
  * @public
  */
 
-const notIsNil = not(isNil);
 const equal = <T, U extends T>(a: T, b: U): boolean => {
-  if (and(notIsNil(a), notIsNil(b))) {
-    if ((a as any).constructor.name !== (b as any).constructor.name) {
-      return false;
-    }
-  }
+  if (constructorName(a) !== constructorName(b)) return false;
 
-  if (is(a, b)) return true;
-
-  const verdictTable: Verdict[] = [
-    [isBothNumber, (a: unknown, b: unknown) => a === b],
+  const verdictTable: [
+    AnyFn<unknown, boolean>,
+    AnyFn<any, boolean>,
+  ][] = [
+    [isBothPrimitive, equalPrimitive],
     [isBothJSONObject, equalJsonObject],
     [isBothArray, equalArray],
     [isBothDate, equalDate],
@@ -85,6 +78,11 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   }
   return false;
 };
+
+const equalPrimitive = <T extends Primitive, U extends T>(
+  a: T,
+  b: U,
+): boolean => or(is(a, b), () => a === b);
 
 const equalConstructor = <T, U extends T>(
   obj: Function,
@@ -243,6 +241,7 @@ export {
   equalKeyValueTupleNoOrder,
   equalMap,
   equalObjectExcludeJson,
+  equalPrimitive,
   equalRegExp,
   equalSet,
   equalTypedArray,

@@ -4,8 +4,8 @@ import {
   isArray,
   isFunction,
   isJSONObject,
-  isNumber,
   isObject,
+  isPrimitive,
   N,
 } from "./deps.ts";
 import type { AnyFn } from "./deps.ts";
@@ -20,10 +20,10 @@ const instanceofFactory = (obj: Function) =>
   <T, U extends T>(a: T, b: U): boolean =>
     and(a instanceof obj, () => b instanceof obj);
 
-const isBothNumber = isTupleFactory(isNumber);
 const isBothArray = isTupleFactory(isArray);
 const isBothFunction = isTupleFactory(isFunction);
 const isBothJSONObject = isTupleFactory(isJSONObject);
+const isBothPrimitive = isTupleFactory(isPrimitive);
 const isBothObjectExcludeJSON = isTupleFactory(isObjectExcludeJSON);
 const isBothDate = instanceofFactory(Date);
 const isBothRegExp = instanceofFactory(RegExp);
@@ -58,8 +58,8 @@ export {
   isBothFunction,
   isBothJSONObject,
   isBothMap,
-  isBothNumber,
   isBothObjectExcludeJSON,
+  isBothPrimitive,
   isBothRegExp,
   isBothSet,
   isBothTypedArray,
