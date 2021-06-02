@@ -1,5 +1,16 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
-import { and, AnyFn, entries, F, has, ifElse, length, N, xor } from "./deps.ts";
+import {
+  and,
+  AnyFn,
+  constructorName,
+  entries,
+  has,
+  ifElse,
+  length,
+  N,
+  or,
+  Primitive,
+} from "./deps.ts";
 import {
   isBothArray,
   isBothArrayBuffer,
@@ -8,7 +19,6 @@ import {
   isBothFunction,
   isBothJSONObject,
   isBothMap,
-  isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
@@ -19,10 +29,6 @@ import {
 } from "./_is.ts";
 import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
-type Verdict = [
-  AnyFn<unknown, readonly [boolean, boolean]>,
-  AnyFn<any, boolean>,
-];
 
 /**
  * Returns `true` if its arguments are equivalent, `false` otherwise. Handles cyclical data structures.
@@ -41,12 +47,15 @@ type Verdict = [
  *
  * @public
  */
-const equal = <T, U extends T>(a: T, b: U): boolean => {
-  if (is(a, b)) return true;
 
-  const verdictTable: Verdict[] = [
-    [isBothNumber, (a: unknown, b: unknown) => a === b],
-    [isBothPrimitive, F],
+const equal = <T, U extends T>(a: T, b: U): boolean => {
+  if (constructorName(a) !== constructorName(b)) return false;
+
+  const verdictTable: [
+    AnyFn<unknown, boolean>,
+    AnyFn<any, boolean>,
+  ][] = [
+    [isBothPrimitive, equalPrimitive],
     [isBothJSONObject, equalJsonObject],
     [isBothArray, equalArray],
     [isBothDate, equalDate],
@@ -63,12 +72,17 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   ];
 
   for (const [filter, fn] of verdictTable) {
-    const [f1, f2] = filter(a, b);
-    if (xor(f1, f2)) return false;
-    if (and(f1, f2)) return fn(a, b);
+    if (filter(a, b)) {
+      return fn(a, b);
+    }
   }
   return false;
 };
+
+const equalPrimitive = <T extends Primitive, U extends T>(
+  a: T,
+  b: U,
+): boolean => or(is(a, b), () => a === b);
 
 const equalConstructor = <T, U extends T>(
   obj: Function,
@@ -227,6 +241,7 @@ export {
   equalKeyValueTupleNoOrder,
   equalMap,
   equalObjectExcludeJson,
+  equalPrimitive,
   equalRegExp,
   equalSet,
   equalTypedArray,

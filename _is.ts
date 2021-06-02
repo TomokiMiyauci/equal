@@ -1,31 +1,29 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import {
   and,
-  ifElse,
   isArray,
   isFunction,
   isJSONObject,
-  isNumber,
   isObject,
   isPrimitive,
   N,
 } from "./deps.ts";
 import type { AnyFn } from "./deps.ts";
 
-const isTupleFactory = (fn: AnyFn) =>
-  <T, U extends T>(a: T, b: U) => [fn(a) as boolean, fn(b) as boolean] as const;
+const isTupleFactory = (fn: AnyFn<any, boolean>) =>
+  <T, U extends T>(a: T, b: U): boolean => and(fn(a), () => fn(b));
 
 const isObjectExcludeJSON = (val: unknown): val is Record<string, unknown> =>
   and(isObject(val), () => N(isJSONObject(val)));
 
 const instanceofFactory = (obj: Function) =>
-  <T, U extends T>(a: T, b: U) => [a instanceof obj, b instanceof obj] as const;
+  <T, U extends T>(a: T, b: U): boolean =>
+    and(a instanceof obj, () => b instanceof obj);
 
-const isBothNumber = isTupleFactory(isNumber);
-const isBothPrimitive = isTupleFactory(isPrimitive);
 const isBothArray = isTupleFactory(isArray);
 const isBothFunction = isTupleFactory(isFunction);
 const isBothJSONObject = isTupleFactory(isJSONObject);
+const isBothPrimitive = isTupleFactory(isPrimitive);
 const isBothObjectExcludeJSON = isTupleFactory(isObjectExcludeJSON);
 const isBothDate = instanceofFactory(Date);
 const isBothRegExp = instanceofFactory(RegExp);
@@ -35,8 +33,8 @@ const isBothSet = instanceofFactory(Set);
 const isBothURL = instanceofFactory(URL);
 const isBothArrayBuffer = instanceofFactory(ArrayBuffer);
 const isBothURLSearchParams = instanceofFactory(URLSearchParams);
-const isBothTypedArray = <T, U extends T>(a: T, b: U): [boolean, boolean] => {
-  const result = [
+const isBothTypedArray = <T, U extends T>(a: T, b: U): boolean => {
+  return [
     Int8Array,
     Uint8Array,
     Uint8ClampedArray,
@@ -49,12 +47,7 @@ const isBothTypedArray = <T, U extends T>(a: T, b: U): [boolean, boolean] => {
     BigInt64Array,
     BigUint64Array,
   ]
-    .some((obj) => {
-      const [f1, f2] = instanceofFactory(obj)(a, b);
-      return and(f1, f2);
-    });
-
-  return ifElse(result, [true, true], [false, false]);
+    .some((obj) => instanceofFactory(obj)(a, b));
 };
 
 export {
@@ -65,7 +58,6 @@ export {
   isBothFunction,
   isBothJSONObject,
   isBothMap,
-  isBothNumber,
   isBothObjectExcludeJSON,
   isBothPrimitive,
   isBothRegExp,
