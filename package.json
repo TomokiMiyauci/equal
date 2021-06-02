@@ -1,7 +1,7 @@
 {
   "name": "lauqe",
   "description": "(=equal) TypeScript-first deep equivalence comparison between two values",
-  "version": "1.4.0-beta.3",
+  "version": "1.4.1-beta.1",
   "main": "dist/index.cjs.js",
   "module": "dist/index.es.js",
   "types": "dist/index.es.d.ts",
