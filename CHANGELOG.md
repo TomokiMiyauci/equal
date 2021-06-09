@@ -1,3 +1,8 @@
+# [v1.4.1](https://github.com/TomokiMiyauci/equal/compare/v1.4.0...v1.4.1) (2021-06-02)
+
+## 🐛 Bug Fixes
+- [`e614a09`](https://github.com/TomokiMiyauci/equal/commit/e614a09)   Improve performance to break on the way
+
 # [v1.4.1-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.4.0...v1.4.1-beta.1) (2021-06-02)
 
 ## 🐛 Bug Fixes
