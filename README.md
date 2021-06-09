@@ -194,7 +194,7 @@ equal(-0, 0); // true
 equal(+0, -0); // true
 ```
 
-#### Built-in objects
+### Built-in objects
 
 The following objects work correctly.
 
@@ -239,9 +239,8 @@ The following objects work correctly.
 
 ### Bundle size optimization
 
-The `equal` function works correctly for
-[all supported bulit-in objects](#built-in-objects). The price is an increase in
-bundle size.
+The `equal` function works correctly for all supported
+[built-in objects](#built-in-objects). The price is an increase in bundle size.
 
 If the data to be compared for equivalence is of multiple data types, or if the
 data types are unclear, the `equal` function may be the best choice.
@@ -252,6 +251,9 @@ specific function instead.
 ### Type definition
 
 #### equal
+
+Compare the equivalence of the all supported
+[built-in objects](#built-in-objects) and primitive values .
 
 ```ts
 declare const equal: <T, U extends T>(a: T, b: U) => boolean;
