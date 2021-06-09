@@ -31,10 +31,10 @@ import { entriesSymbol, instanceOf } from "./_utils.ts";
 import { is } from "./_constants.ts";
 
 /**
- * Returns `true` if its arguments are equivalent, `false` otherwise. Handles cyclical data structures.
+ * Returns `true` if its arguments are equivalent, otherwise `false`. Handles cyclical data structures.
  *
- * @param a - Input any value
- * @param b - Input any value
+ * @param a - Any value
+ * @param b - Any value
  * @returns Return `true` if the reference memory is the same or the property members and their values are the same
  *
  * @example
@@ -49,14 +49,14 @@ import { is } from "./_constants.ts";
  */
 
 const equal = <T, U extends T>(a: T, b: U): boolean => {
-  if (constructorName(a) !== constructorName(b)) return false;
+  if (!equalConstructorName(a, b)) return false;
 
   const verdictTable: [
     AnyFn<unknown, boolean>,
     AnyFn<any, boolean>,
   ][] = [
     [isBothPrimitive, equalPrimitive],
-    [isBothJSONObject, equalJsonObject],
+    [isBothJSONObject, equalJSONObject],
     [isBothArray, equalArray],
     [isBothDate, equalDate],
     [isBothFunction, equalFunction],
@@ -79,6 +79,22 @@ const equal = <T, U extends T>(a: T, b: U): boolean => {
   return false;
 };
 
+const equalConstructorName = <T, U extends T>(a: T, b: U): boolean =>
+  constructorName(a) === constructorName(b);
+
+/**
+ * Returns `true` if its primitive arguments are equivalent; otherwise `false`.
+ * @param a - Any primitive value
+ * @param b - Any primitive value
+ * @returns The result of `Object.is(a, b) || a === b`
+ *
+ * @example
+ * ```ts
+ * equalPrimitive(NaN, NaN)) // true
+ * equalPrimitive(+0, -0)) // true
+ * ```
+ * @beta
+ */
 const equalPrimitive = <T extends Primitive, U extends T>(
   a: T,
   b: U,
@@ -93,10 +109,38 @@ const equalConstructor = <T, U extends T>(
 const equalRegExp = <T extends RegExp, U extends T>(a: T, b: U): boolean =>
   a.toString() === b.toString();
 
-const equalDate = <T extends Date, U extends T>(a: T, b: U): boolean =>
-  a.getTime() === b.getTime();
+/**
+ * Returns `true` if its `Date` arguments are equivalent; otherwise `false`.
+ * @param a - Any `Date` object
+ * @param b - Any `Date` object
+ * @returns The result of `a.getTime() === b.getTime()`
+ *
+ * @example
+ * ```ts
+ * equalDate(new Date(0), new Date(0)) // true
+ * equalDate(new Date("1999/1/1 00:00:01"), new Date("1999/1/1") // false
+ * ```
+ * @beta
+ */
+const equalDate = (a: Date, b: Date): boolean =>
+  equalPrimitive(a.getTime(), b.getTime());
 
-const equalError = <T extends Error, U extends T>(a: T, b: U): boolean => {
+/**
+ * Returns `true` if its `Error` arguments are equivalent; otherwise `false`.
+ * @param a - Any `Error` and its Derived object
+ * @param b - Any `Error` and its Derived object
+ * @returns `true` if the constructor and the error message are the same;otherwise false
+ *
+ * @example
+ * ```ts
+ * equalError(Error('test'), Error('test')) // true
+ * equalError(AggregateError([TypeError('test')]), AggregateError([TypeError('test')])) // true
+ * equalError(Error('test'), Error('hello')) // false
+ * equalError(Error('test'), TypeError('test')) // false
+ * ```
+ * @beta
+ */
+const equalError = (a: Error, b: Error): boolean => {
   if (a.message !== b.message) return false;
   const errorConstructors = [
     EvalError,
@@ -116,7 +160,7 @@ const equalError = <T extends Error, U extends T>(a: T, b: U): boolean => {
     equalArray(
       (a as Error as AggregateError).errors,
       (b as Error as AggregateError).errors,
-    ), () => a.constructor.name === b.constructor.name);
+    ), () => equalConstructorName(a, b));
 };
 
 const equalFunction = <T extends Function, U extends T>(a: T, b: U): boolean =>
@@ -157,7 +201,7 @@ const equalKeyValueTupleNoOrder = <T extends [unknown, unknown][], U extends T>(
   );
 };
 
-const equalJsonObject = <T extends Record<PropertyKey, unknown>, U extends T>(
+const equalJSONObject = <T extends Record<PropertyKey, unknown>, U extends T>(
   a: T,
   b: U,
 ): boolean => {
@@ -216,13 +260,38 @@ const equalTypedArray = <
   b: T,
 ): boolean => equalArray([...a], [...b]);
 
-const equalArrayBuffer = <T extends ArrayBuffer, U extends T>(
-  a: T,
-  b: U,
+/**
+ * Returns `true` if its `ArrayBuffer` arguments are equivalent; otherwise `false`.
+ * @param a - Any `ArrayBuffer` object
+ * @param b - Any `ArrayBuffer` object
+ * @returns The result of `a.byteLength === b.byteLength`
+ *
+ * @example
+ * ```ts
+ * equalArrayBuffer(new ArrayBuffer(0), new ArrayBuffer(0)) // true
+ * equalArrayBuffer(new ArrayBuffer(0), new ArrayBuffer(1)) // false
+ * ```
+ * @beta
+ */
+const equalArrayBuffer = (
+  a: ArrayBuffer,
+  b: ArrayBuffer,
 ): boolean => a.byteLength === b.byteLength;
 
-const equalURL = <T extends URL, U extends T>(a: T, b: U): boolean =>
-  a.toString() === b.toString();
+/**
+ * Returns `true` if its `URL` arguments are equivalent; otherwise `false`.
+ * @param a - Any `URL` object
+ * @param b - Any `URL` object
+ * @returns The result of `a.toString() === b.toString()`
+ *
+ * @example
+ * ```ts
+ * equalURL(new URL('https://google.com', 'https://google.com')) // true
+ * equalURL(new URL('https://google.com', 'https://google.com/')) // true
+ * ```
+ * @beta
+ */
+const equalURL = (a: URL, b: URL): boolean => a.toString() === b.toString();
 const equalURLSearchParams = <T extends URLSearchParams, U extends T>(
   a: T,
   b: U,
@@ -236,7 +305,7 @@ export {
   equalDate,
   equalError,
   equalFunction,
-  equalJsonObject,
+  equalJSONObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,
   equalMap,

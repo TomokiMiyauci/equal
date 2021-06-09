@@ -8,7 +8,7 @@ import {
   equalDate,
   equalError,
   equalFunction,
-  equalJsonObject,
+  equalJSONObject,
   equalKeyValueTuple,
   equalKeyValueTupleNoOrder,
   equalMap,
@@ -54,7 +54,7 @@ Deno.test("equalPrimitive", () => {
   });
 });
 
-Deno.test("equalJsonObject", () => {
+Deno.test("equalJSONObject", () => {
   const symbol = Symbol("hello");
   const symbol2 = Symbol("world");
 
@@ -99,9 +99,9 @@ Deno.test("equalJsonObject", () => {
 
   table.forEach(([a, b, expected]) => {
     assertEquals(
-      equalJsonObject(a, b),
+      equalJSONObject(a, b),
       expected,
-      `equalJsonObject(${a}, ${b}) -> ${expected}`,
+      `equalJSONObject(${a}, ${b}) -> ${expected}`,
     );
   });
 });
@@ -541,6 +541,9 @@ Deno.test("equalDate", () => {
     [new Date("1999/1/1 00:00:01"), new Date("1999/1/1"), false],
     [new Date(1), new Date(0), false],
     [new Date(0), new Date(1), false],
+    [new Date("a"), new Date("a"), true],
+    [new Date("a"), new Date("b"), true],
+    [new Date("1000/1/1"), new Date("1000/1/1"), true],
   ];
   table.forEach(([a, b, expected]) => {
     assertEquals(
