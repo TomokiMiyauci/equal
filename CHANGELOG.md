@@ -1,3 +1,8 @@
+# [v1.5.0](https://github.com/TomokiMiyauci/equal/compare/v1.4.1...v1.5.0) (2021-06-09)
+
+## ✨ New Features
+- [`fa59253`](https://github.com/TomokiMiyauci/equal/commit/fa59253)   Export specific data types functions (Issues: [`#29`](https://github.com/TomokiMiyauci/equal/issues/29))
+
 # [v1.5.0-beta.1](https://github.com/TomokiMiyauci/equal/compare/v1.4.1...v1.5.0-beta.1) (2021-06-09)
 
 ## ✨ New Features
