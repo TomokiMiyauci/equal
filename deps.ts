@@ -21,9 +21,9 @@ export {
   not,
   or,
   xor,
-} from "https://deno.land/x/fonction@v1.8.0-beta.7/mod.ts";
+} from "https://deno.land/x/fonction@v1.8.1/mod.ts";
 
 export type {
   AnyFn,
   Primitive,
-} from "https://deno.land/x/fonction@v1.8.0-beta.7/mod.ts";
+} from "https://deno.land/x/fonction@v1.8.1/mod.ts";

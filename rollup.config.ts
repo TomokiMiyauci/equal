@@ -13,7 +13,7 @@ const external = keys(dependencies);
 
 const replaceOption = {
   ".ts": "",
-  "https://deno.land/x/fonction@v1.8.0-beta.7/mod": "fonction",
+  "https://deno.land/x/fonction@v1.8.1/mod": "fonction",
   preventAssignment: true,
 };
 const config = [
