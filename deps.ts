@@ -20,8 +20,10 @@ export {
   N,
   not,
   or,
+  pipe,
   xor,
 } from "https://deno.land/x/fonction@v1.8.1/mod.ts";
+export { curry } from "https://deno.land/x/curry@v1.0.0/mod.ts";
 
 export type {
   AnyFn,
