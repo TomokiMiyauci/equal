@@ -47,7 +47,6 @@ import { is } from "./_constants.ts";
  *
  * @public
  */
-
 const equal = <T, U extends T>(a: T, b: U): boolean => {
   if (!equalConstructorName(a, b)) return false;
 
@@ -227,7 +226,7 @@ const equalObjectExcludeJson = <
   if (
     [Number, String, Boolean].some((obj) => equalConstructor(obj, a, b))
   ) {
-    return equal(a.valueOf(), b.valueOf());
+    return a.valueOf() === b.valueOf();
   }
   return false;
 };

@@ -1,6 +1,6 @@
 // Copyright 2021-present the Equal authors. All rights reserved. MIT license.
 import { getOwnPropertySymbols } from "./_constants.ts";
-
+import { curry } from "./deps.ts";
 const entriesSymbol = (
   val: Record<PropertyKey, unknown>,
 ): [string, unknown][] => {
@@ -11,7 +11,7 @@ const entriesSymbol = (
   return symbols.map((symbol) => [symbol, val[symbol]]);
 };
 
-const instanceOf = <T extends Function>(obj: T, val: unknown): val is T =>
-  val instanceof obj;
+const _instanceOf = (obj: Function, val: unknown) => val instanceof obj;
+const instanceOf = curry(_instanceOf);
 
 export { entriesSymbol, instanceOf };

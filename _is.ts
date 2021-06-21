@@ -6,33 +6,33 @@ import {
   isJSONObject,
   isObject,
   isPrimitive,
-  N,
+  pipe,
 } from "./deps.ts";
-import type { AnyFn } from "./deps.ts";
+import { instanceOf } from "./_utils.ts";
 
-const isTupleFactory = (fn: AnyFn<any, boolean>) =>
-  <T, U extends T>(a: T, b: U): boolean => and(fn(a), () => fn(b));
+type IsFn = (val: unknown) => unknown;
+
+const isFactory = (fn: IsFn) =>
+  <T, U extends T>(a: T, b: U): boolean => and(fn(a), fn(b));
 
 const isObjectExcludeJSON = (val: unknown): val is Record<string, unknown> =>
-  and(isObject(val), () => N(isJSONObject(val)));
+  and(isObject(val), () => !(isJSONObject(val)));
 
-const instanceofFactory = (obj: Function) =>
-  <T, U extends T>(a: T, b: U): boolean =>
-    and(a instanceof obj, () => b instanceof obj);
+const _instanceOfFactory = pipe(instanceOf, isFactory);
 
-const isBothArray = isTupleFactory(isArray);
-const isBothFunction = isTupleFactory(isFunction);
-const isBothJSONObject = isTupleFactory(isJSONObject);
-const isBothPrimitive = isTupleFactory(isPrimitive);
-const isBothObjectExcludeJSON = isTupleFactory(isObjectExcludeJSON);
-const isBothDate = instanceofFactory(Date);
-const isBothRegExp = instanceofFactory(RegExp);
-const isBothError = instanceofFactory(Error);
-const isBothMap = instanceofFactory(Map);
-const isBothSet = instanceofFactory(Set);
-const isBothURL = instanceofFactory(URL);
-const isBothArrayBuffer = instanceofFactory(ArrayBuffer);
-const isBothURLSearchParams = instanceofFactory(URLSearchParams);
+const isBothArray = isFactory(isArray);
+const isBothFunction = isFactory(isFunction);
+const isBothJSONObject = isFactory(isJSONObject);
+const isBothPrimitive = isFactory(isPrimitive);
+const isBothObjectExcludeJSON = isFactory(isObjectExcludeJSON);
+const isBothDate = _instanceOfFactory(Date);
+const isBothRegExp = _instanceOfFactory(RegExp);
+const isBothError = _instanceOfFactory(Error);
+const isBothMap = _instanceOfFactory(Map);
+const isBothSet = _instanceOfFactory(Set);
+const isBothURL = _instanceOfFactory(URL);
+const isBothArrayBuffer = _instanceOfFactory(ArrayBuffer);
+const isBothURLSearchParams = _instanceOfFactory(URLSearchParams);
 const isBothTypedArray = <T, U extends T>(a: T, b: U): boolean => {
   return [
     Int8Array,
@@ -47,7 +47,7 @@ const isBothTypedArray = <T, U extends T>(a: T, b: U): boolean => {
     BigInt64Array,
     BigUint64Array,
   ]
-    .some((obj) => instanceofFactory(obj)(a, b));
+    .some((obj) => _instanceOfFactory(obj)(a, b));
 };
 
 export {
@@ -65,4 +65,7 @@ export {
   isBothTypedArray,
   isBothURL,
   isBothURLSearchParams,
+  isFactory,
 };
+
+export type { IsFn };
