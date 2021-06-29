@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "curry-rice": "^1.0.0",
-    "fonction": "^1.8.1"
+    "fonction": "^2.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^12.1.4",

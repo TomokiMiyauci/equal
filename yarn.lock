@@ -1659,6 +1659,11 @@ argv-formatter@~1.0.0:
   resolved "https://registry.yarnpkg.com/argv-formatter/-/argv-formatter-1.0.0.tgz#a0ca0cbc29a5b73e836eebe1cbf6c5e0e4eb82f9"
   integrity sha1-oMoMvCmltz6Dbuvhy/bF4OTrgvk=
 
+arithmetic4@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/arithmetic4/-/arithmetic4-2.2.0.tgz#bd22172fda2bce27cbe171e9ef9ad1f651587633"
+  integrity sha512-cpEbaM5WlhcPCpzo1cquQr9sv7OkfsIfksQpxULUuQzA+N1icmPJk88qMA6Zzm6fd4x2E7YLoJ/L0Vbx8RDGZw==
+
 array-ify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-ify/-/array-ify-1.0.0.tgz#9e528762b4a9066ad163a6962a364418e9626ece"
@@ -2727,10 +2732,21 @@ findup-sync@^4.0.0:
     micromatch "^4.0.2"
     resolve-dir "^1.0.1"
 
-fonction@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.8.1.tgz#914b3daa29dcc8d41acfd278d20cddbb33fe8134"
-  integrity sha512-CfiQWjwsvbnKetiOg0XPrxTK4rI+xq/+RuNv32cwnt37v66O4WL+vAUe7hrSRXMqavA2KLKSQBE+I7CBXd3yrQ==
+fonction@^1.8.0-beta.6:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.9.0.tgz#3866621a5d6381c44e559db4a04d043253eecb96"
+  integrity sha512-kFt8/QbJdrVukhppuOwuSmNsAxfkl2LH9OygARP7pUfb7aJzJUoF7triyww6YjY40F/m9x+qoJX9zhEk2c6gjA==
+  dependencies:
+    curry-rice "^1.0.0"
+
+fonction@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-2.0.0.tgz#d9641a17e432a6278052e162789ee6f3ea3f0d73"
+  integrity sha512-N1iVB7TRguUzNbDDqK8qU+aS+3XpmcxswcM/RNt9ys1ox18nHpaysl/qChh2kfqILmOcD5KZ2PCcwi++LUfGiQ==
+  dependencies:
+    arithmetic4 "^2.0.0"
+    curry-rice "^1.0.0"
+    lauqe "^1.5.0"
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -3588,6 +3604,13 @@ kind-of@^6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+
+lauqe@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/lauqe/-/lauqe-1.5.0.tgz#6e9b9f8c0d764496089b91f3c0db869e1da2452c"
+  integrity sha512-GlBF1bdD27NPrRSZ3UAp7eH1S1nCbFEMP1Hz/22M3Bh/9mgqwNYif2WiersbqtafJ7sPMALPQrVZAx9EFopfFg==
+  dependencies:
+    fonction "^1.8.0-beta.6"
 
 leven@^3.1.0:
   version "3.1.0"
