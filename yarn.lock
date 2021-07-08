@@ -1050,6 +1050,13 @@
   resolved "https://registry.yarnpkg.com/@mdn/browser-compat-data/-/browser-compat-data-3.3.6.tgz#8f7173599c3f991b7ca6553a15ac8eede88fd82f"
   integrity sha512-sQsnI3Eup8ZvBH5anVdq3m7xexc1l/uciO0Cm0YrKhB5bNOu1x7XyhHvmI8V6rC8KsgqqBHvxf/ZUArBkGcIYg==
 
+"@miyauci/is-valid@1.0.0-beta.15":
+  version "1.0.0-beta.15"
+  resolved "https://registry.yarnpkg.com/@miyauci/is-valid/-/is-valid-1.0.0-beta.15.tgz#7af55c0f0ab5fa41ff784d0eac788782ba143ccd"
+  integrity sha512-ZF8du4N3uD02Q5CoHOz53d6FW2U/sl8GUvIUUP0GU94RFCR3ZvQ2VWajB8+gGsa1TGXQBCbLdhO835ajpHeDFA==
+  dependencies:
+    fonction "^1.8.0-beta.6"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -1659,6 +1666,11 @@ argv-formatter@~1.0.0:
   resolved "https://registry.yarnpkg.com/argv-formatter/-/argv-formatter-1.0.0.tgz#a0ca0cbc29a5b73e836eebe1cbf6c5e0e4eb82f9"
   integrity sha1-oMoMvCmltz6Dbuvhy/bF4OTrgvk=
 
+arithmetic4@^2.0.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/arithmetic4/-/arithmetic4-2.2.0.tgz#bd22172fda2bce27cbe171e9ef9ad1f651587633"
+  integrity sha512-cpEbaM5WlhcPCpzo1cquQr9sv7OkfsIfksQpxULUuQzA+N1icmPJk88qMA6Zzm6fd4x2E7YLoJ/L0Vbx8RDGZw==
+
 array-ify@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/array-ify/-/array-ify-1.0.0.tgz#9e528762b4a9066ad163a6962a364418e9626ece"
@@ -2209,6 +2221,22 @@ convert-source-map@^1.7.0:
   dependencies:
     safe-buffer "~5.1.1"
 
+core-fn@1.0.0-beta.14:
+  version "1.0.0-beta.14"
+  resolved "https://registry.yarnpkg.com/core-fn/-/core-fn-1.0.0-beta.14.tgz#8900bad21615b937a6ef881adb3e951b86ea6a49"
+  integrity sha512-eApPk7GCuobjdaVVVD108kwXqTejxLzlHT2w5vKhI0eqZ2ZorxajbCgyvvEdLXT/hb6Yjie6p4SqvuIjjJM6Kw==
+  dependencies:
+    curry-rice "^1.0.0"
+    fonction "2.1.0-beta.1"
+
+core-fn@1.0.0-beta.8:
+  version "1.0.0-beta.8"
+  resolved "https://registry.yarnpkg.com/core-fn/-/core-fn-1.0.0-beta.8.tgz#bf52e118b415e1d5a2373d7c77dc411fa2e93c49"
+  integrity sha512-hW9uppIM7PjV9lXZw6su7808NYTF5GdFbjgOuuWAf0QR4NWbXobcqaIUPLs+U/ajxzDvIyr+74yeZJyjMubEfQ==
+  dependencies:
+    curry-rice "^1.0.0"
+    fonction "^1.8.1"
+
 core-js-compat@^3.9.0, core-js-compat@^3.9.1:
   version "3.14.0"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.14.0.tgz#b574dabf29184681d5b16357bd33d104df3d29a5"
@@ -2727,10 +2755,34 @@ findup-sync@^4.0.0:
     micromatch "^4.0.2"
     resolve-dir "^1.0.1"
 
-fonction@^1.8.1:
-  version "1.8.1"
-  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.8.1.tgz#914b3daa29dcc8d41acfd278d20cddbb33fe8134"
-  integrity sha512-CfiQWjwsvbnKetiOg0XPrxTK4rI+xq/+RuNv32cwnt37v66O4WL+vAUe7hrSRXMqavA2KLKSQBE+I7CBXd3yrQ==
+fonction@2.1.0-beta.1:
+  version "2.1.0-beta.1"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-2.1.0-beta.1.tgz#f11da546e3f3ff40a2c2a8037733235d0203a2a1"
+  integrity sha512-sAF/NoQDQ2xEuOtfblcF0D1r5UrlCp3Z12i/fST21u70CV9OVc09psopzqj4UAdluFCRL7UQ5VBu8nuKvR7oMg==
+  dependencies:
+    "@miyauci/is-valid" "1.0.0-beta.15"
+    arithmetic4 "^2.0.0"
+    core-fn "1.0.0-beta.8"
+    curry-rice "^1.0.0"
+    lauqe "^1.5.0"
+
+fonction@^1.8.0-beta.6, fonction@^1.8.1:
+  version "1.9.0"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-1.9.0.tgz#3866621a5d6381c44e559db4a04d043253eecb96"
+  integrity sha512-kFt8/QbJdrVukhppuOwuSmNsAxfkl2LH9OygARP7pUfb7aJzJUoF7triyww6YjY40F/m9x+qoJX9zhEk2c6gjA==
+  dependencies:
+    curry-rice "^1.0.0"
+
+fonction@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/fonction/-/fonction-2.1.0.tgz#df7b61ea0f8a610e80d9f8bf5768ef98994447a0"
+  integrity sha512-lXT9uBAMZBzNRM9GKCmFN0hijgGeg/wVap24QmgW2hxQE1KqhDIMB8wMaFBMoMvl6kP5gcUPT3V5ErJiZy15Gg==
+  dependencies:
+    "@miyauci/is-valid" "1.0.0-beta.15"
+    arithmetic4 "^2.0.0"
+    core-fn "1.0.0-beta.14"
+    curry-rice "^1.0.0"
+    lauqe "^1.5.0"
 
 forever-agent@~0.6.1:
   version "0.6.1"
@@ -3588,6 +3640,13 @@ kind-of@^6.0.3:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
+
+lauqe@^1.5.0:
+  version "1.5.0"
+  resolved "https://registry.yarnpkg.com/lauqe/-/lauqe-1.5.0.tgz#6e9b9f8c0d764496089b91f3c0db869e1da2452c"
+  integrity sha512-GlBF1bdD27NPrRSZ3UAp7eH1S1nCbFEMP1Hz/22M3Bh/9mgqwNYif2WiersbqtafJ7sPMALPQrVZAx9EFopfFg==
+  dependencies:
+    fonction "^1.8.0-beta.6"
 
 leven@^3.1.0:
   version "3.1.0"
